@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
 
     this.name = await this.sessionService.getName();
   }
-  
+
   async logout(): Promise<void> {
     await this.sessionService.logout();
     await this.router.navigate(['/login']);
