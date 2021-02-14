@@ -18,5 +18,14 @@ namespace Contract.Architecture.Persistence.Tests
 
             return persistenceDbContext;
         }
+
+        public static PersistenceDbContext CreatePersistenceDbContextWithDefault()
+        {
+            PersistenceDbContext persistenceDbContext = CreatePersistenceDbContext();
+
+            persistenceDbContext.SaveChanges();
+
+            return persistenceDbContext;
+        }
     }
 }
