@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Model;
-using Contract.Architecture.Backend.Core.Persistence.Model.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Persistence.Model.Users.EmailUserPasswortReset;
-using Contract.Architecture.Backend.Core.Persistence.Model.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Persistence;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUserPasswortReset;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests.Mocking

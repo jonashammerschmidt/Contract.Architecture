@@ -1,9 +1,0 @@
-﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Model.Users.EmailUserPasswordReset
-{
-    public interface IBrowserInfo
-    {
-        string Browser { get; set; }
-
-        string OperatingSystem { get; set; }
-    }
-}

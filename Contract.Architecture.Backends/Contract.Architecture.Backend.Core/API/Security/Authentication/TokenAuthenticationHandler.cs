@@ -1,5 +1,5 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Model.Sessions.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -48,14 +48,14 @@ namespace Contract.Architecture.Backend.Core.API.Security.Authentication
                 return AuthenticateResult.Fail("Format of authorization header invalid");
             }
 
-            ILogicResult<Contract.Logic.Model.Sessions.Sessions.ISession> validationResult = this.sessionsLogic.GetSessionFromToken(token);
+            ILogicResult<Contract.Logic.Modules.Sessions.Sessions.ISession> validationResult = this.sessionsLogic.GetSessionFromToken(token);
             if (!validationResult.IsSuccessful)
             {
                 logger.Warn("Ungültiger oder abgelaufener Session-Token für {request-method} {request-path}.", this.Request.Method, this.Request.Path);
                 return AuthenticateResult.Fail("Token invalid");
             }
 
-            Contract.Logic.Model.Sessions.Sessions.ISession session = validationResult.Data;
+            Contract.Logic.Modules.Sessions.Sessions.ISession session = validationResult.Data;
 
             AuthenticationTicket ticket = this.CreateAuthenticationTicketFromValidSession(session);
             return AuthenticateResult.Success(ticket);
@@ -79,7 +79,7 @@ namespace Contract.Architecture.Backend.Core.API.Security.Authentication
             return token;
         }
 
-        private AuthenticationTicket CreateAuthenticationTicketFromValidSession(Contract.Logic.Model.Sessions.Sessions.ISession session)
+        private AuthenticationTicket CreateAuthenticationTicketFromValidSession(Contract.Logic.Modules.Sessions.Sessions.ISession session)
         {
             List<Claim> claims = this.GenerateClaimsFromSession(session);
 
@@ -90,7 +90,7 @@ namespace Contract.Architecture.Backend.Core.API.Security.Authentication
             return ticket;
         }
 
-        private List<Claim> GenerateClaimsFromSession(Contract.Logic.Model.Sessions.Sessions.ISession session)
+        private List<Claim> GenerateClaimsFromSession(Contract.Logic.Modules.Sessions.Sessions.ISession session)
         {
             var claims = new List<Claim>()
             {

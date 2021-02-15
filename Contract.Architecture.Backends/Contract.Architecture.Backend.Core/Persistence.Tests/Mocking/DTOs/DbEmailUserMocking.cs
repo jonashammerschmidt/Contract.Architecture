@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Model.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
 using System;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests.Mocking

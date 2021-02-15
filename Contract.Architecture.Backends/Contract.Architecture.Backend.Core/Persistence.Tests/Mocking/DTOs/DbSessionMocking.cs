@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Model.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions;
 using System;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests.Mocking

@@ -1,7 +1,7 @@
 using Contract.Architecture.Backend.Core.API.APIConfiguration;
 using Contract.Architecture.Backend.Core.API.Security.Authentication;
-using Contract.Architecture.Backend.Core.Contract.Logic.Model.Sessions;
-using Contract.Architecture.Backend.Core.Contract.Logic.Model.Sessions.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
