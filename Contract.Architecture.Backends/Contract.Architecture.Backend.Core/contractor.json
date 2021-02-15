@@ -1,0 +1,6 @@
+{
+  "BackendDestinationFolder": ".",
+  "DbDestinationFolder": "..\\..\\Contract.Architecture.Databases\\Contract.Architecture.Database.Core",
+  "ProjectName": "Contract.Architecture.Backend.Core",
+  "DbProjectName": "Contract.Architecture.Database.Core"
+}

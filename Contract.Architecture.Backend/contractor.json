@@ -1,6 +1,0 @@
-{
-  "BackendDestinationFolder": ".",
-  "DbDestinationFolder": "..\\Contract.Architecture.DB",
-  "ProjectName": "Contract.Architecture",
-  "DbProjectName": "Contract.Architecture.DB"
-}
