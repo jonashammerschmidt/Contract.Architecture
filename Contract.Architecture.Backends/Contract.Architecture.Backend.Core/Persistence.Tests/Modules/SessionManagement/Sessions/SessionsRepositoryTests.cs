@@ -1,6 +1,5 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
-using Contract.Architecture.Backend.Core.Persistence.Tests.Mocking;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
