@@ -10,11 +10,11 @@ using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
 using Contract.Architecture.Backend.Core.Logic.Modules.Sessions.Sessions;
 using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset;
 using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Services.Email;
-using Contract.Architecture.Backend.Core.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Logic.Services.Password;
 using Contract.Architecture.Backend.Core.Logic.Services.ScheduledJobs;
-using Contract.Architecture.Backend.Core.Logic.Services.Time;
+using Contract.Architecture.Backend.Core.Logic.SystemConnections.Email;
+using Contract.Architecture.Backend.Core.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Logic.Tools.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -52,15 +52,15 @@ namespace Contract.Architecture.Backend.Core.Logic
 
         private static void StartupServices(IServiceCollection services, IConfiguration configuration)
         {
-            // BSI Passwort
-            services.AddSingleton<IBsiPasswordService, BsiPasswordService>();
+            // Passwort
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             // DateTime
-            services.AddSingleton<IDateTimeService, DateTimeService>();
+            services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 
             // E-Mail
-            services.AddSingleton<IEmailService, EmailService>();
-            services.AddOptionsFromConfiguration<EmailServiceOptions>(configuration);
+            services.AddSingleton<IEmailClient, EmailClient>();
+            services.AddOptionsFromConfiguration<EmailClientOptions>(configuration);
 
             // Guid
             services.AddSingleton<IGuidGenerator, GuidGenerator>();

@@ -1,4 +1,6 @@
 using Contract.Architecture.Backend.Core.API.APIConfiguration;
+using Contract.Architecture.Backend.Core.API.Contexts;
+using Contract.Architecture.Backend.Core.API.Middlewares;
 using Contract.Architecture.Backend.Core.API.Security.Authentication;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
