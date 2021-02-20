@@ -1,9 +1,9 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions
 {
     internal class SessionsRepository : ISessionsRepository
     {

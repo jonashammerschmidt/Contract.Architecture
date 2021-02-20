@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.ScheduledJob;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.JobScheduler;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -6,7 +6,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Contract.Architecture.Backend.Core.Logic.Services.ScheduledJobs
+namespace Contract.Architecture.Backend.Core.Logic.JobSchedulers
 {
     internal class JobScheduler<TScheduledJob> : IHostedService, IDisposable
         where TScheduledJob : IScheduledJob

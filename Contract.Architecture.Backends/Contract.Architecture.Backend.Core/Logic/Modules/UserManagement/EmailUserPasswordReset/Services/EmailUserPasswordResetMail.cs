@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     internal class EmailUserPasswordResetMail
     {

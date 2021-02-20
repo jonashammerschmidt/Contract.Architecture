@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Contract.Architecture.Backend.Core.Contract.Logic.Services.ScheduledJob
+namespace Contract.Architecture.Backend.Core.Contract.Logic.JobScheduler
 {
     public interface IScheduledJob
     {

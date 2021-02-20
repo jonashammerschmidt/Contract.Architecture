@@ -1,4 +1,4 @@
-﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers
+﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers
 {
     public interface IEmailUserCreate
     {

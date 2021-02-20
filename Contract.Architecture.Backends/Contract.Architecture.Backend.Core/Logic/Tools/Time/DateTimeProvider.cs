@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
 using System;
 
 namespace Contract.Architecture.Backend.Core.Logic.Tools.Time

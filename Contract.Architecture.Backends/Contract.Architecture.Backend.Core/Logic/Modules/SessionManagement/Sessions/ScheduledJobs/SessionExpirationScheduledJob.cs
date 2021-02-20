@@ -1,10 +1,10 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.ScheduledJob;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.JobScheduler;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Logic.Modules.SessionManagement.Sessions
 {
     internal class SessionExpirationScheduledJob : IScheduledJob
     {

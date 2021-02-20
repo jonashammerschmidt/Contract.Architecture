@@ -1,11 +1,11 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUserPasswortReset;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Persistence.Tests.Mocking;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
+using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Persistence.Tests.Modules.UserManagement.EmailUsers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Users.EmailUserPasswordResetTokens
+namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.UserManagement.EmailUserPasswordReset
 {
     [TestClass]
     public class EmailUserPasswortResetTokensRepositoryTests

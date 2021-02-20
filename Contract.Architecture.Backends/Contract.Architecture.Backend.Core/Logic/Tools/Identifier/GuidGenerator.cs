@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
 using System;
 
 namespace Contract.Architecture.Backend.Core.Logic.Tools.Identifier

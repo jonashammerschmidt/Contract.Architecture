@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUserPasswortReset;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUserPasswortResetTokens;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     internal class DbEmailUserPasswordResetToken : IDbEmailUserPasswordResetToken
     {

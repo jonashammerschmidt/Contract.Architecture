@@ -1,6 +1,6 @@
 ﻿using Contract.Architecture.Backend.Core.API.Security.Authorization;
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers

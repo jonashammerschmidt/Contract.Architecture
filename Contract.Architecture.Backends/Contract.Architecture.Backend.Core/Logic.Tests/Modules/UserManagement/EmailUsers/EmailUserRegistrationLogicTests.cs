@@ -1,16 +1,15 @@
-﻿using Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Services.Password;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Logic.Tools.Password;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.UserManagement.EmailUsers
 {
     [TestClass]
     public class EmailUserRegistrationLogicTests
@@ -18,8 +17,8 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
         private static readonly Guid EmailUserId = Guid.Parse("59f7717b-4647-4d33-9da4-b2a6a7d126c5");
         private static readonly string Email = "test@example.org";
         private static readonly string Password = "123QWEasd!";
-        private static readonly string PasswordHash = "lLj3sQPf1isP6T1CZWZ9RMN3W9okAdTk4OjooKHO+9BT5tJ55euCLde8ifSl6ru6SuaypWRiE1nkiZPNHDbu4A==";
-        private static readonly string PasswordSalt = "50000.voYJdI+L2w/atDbVrWlMRUw8MkmXeBO9c35Ms2wQZfYQkw==";
+        private static readonly string Hash = "lLj3sQPf1isP6T1CZWZ9RMN3W9okAdTk4OjooKHO+9BT5tJ55euCLde8ifSl6ru6SuaypWRiE1nkiZPNHDbu4A==";
+        private static readonly string Salt = "50000.voYJdI+L2w/atDbVrWlMRUw8MkmXeBO9c35Ms2wQZfYQkw==";
 
         [TestMethod]
         public void RegisterConflictTest()
@@ -50,13 +49,13 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
         {
             // Arrange
             Mock<IEmailUsersRepository> emailUsersRepository = this.SetupEmailUsersRepositoryNotExisting();
-            Mock<IPasswordHasher> PasswordHasher = this.SetupPasswordHasherDefault();
+            Mock<IPasswordHasher> passwordHasher = this.SetupPasswordHasherDefault();
             Mock<IGuidGenerator> guidGeneration = this.SetupGuidGeneratorDefault();
             var logger = Mock.Of<ILogger<EmailUserCrudLogic>>();
 
             EmailUserCrudLogic emailUserRegistrationLogic = new EmailUserCrudLogic(
                 emailUsersRepository.Object,
-                PasswordHasher.Object,
+                passwordHasher.Object,
                 guidGeneration.Object,
                 logger);
 
@@ -78,24 +77,24 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
             {
                 Id = EmailUserId,
                 Email = Email,
-                PasswordHash = PasswordHash,
-                PasswordSalt = PasswordSalt,
+                PasswordHash = Hash,
+                PasswordSalt = Salt,
             };
         }
 
         private Mock<IPasswordHasher> SetupPasswordHasherDefault()
         {
-            var PasswordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
-            PasswordHasher.Setup(service => service.HashPassword(It.IsAny<string>())).Returns((string passwort) =>
+            var passwordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
+            passwordHasher.Setup(service => service.HashPassword(It.IsAny<string>())).Returns((string passwort) =>
             {
                 Assert.AreEqual(Password, passwort);
                 return new PasswordHash()
                 {
-                    PasswordHash = PasswordHash,
-                    Salt = PasswordSalt
+                    Hash = Hash,
+                    Salt = Salt
                 };
             });
-            return PasswordHasher;
+            return passwordHasher;
         }
 
         private Mock<IEmailUsersRepository> SetupEmailUsersRepositoryExisting()
@@ -115,8 +114,8 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
             {
                 Assert.AreEqual(EmailUserId, dbEmailUser.Id);
                 Assert.AreEqual(Email, dbEmailUser.Email);
-                Assert.AreEqual(PasswordHash, dbEmailUser.PasswordHash);
-                Assert.AreEqual(PasswordSalt, dbEmailUser.PasswordSalt);
+                Assert.AreEqual(Hash, dbEmailUser.PasswordHash);
+                Assert.AreEqual(Salt, dbEmailUser.PasswordSalt);
             });
             return emailUsersRepository;
         }

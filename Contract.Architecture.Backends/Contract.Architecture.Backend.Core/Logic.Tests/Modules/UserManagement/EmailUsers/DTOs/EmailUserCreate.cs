@@ -1,6 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
 
-namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.UserManagement.EmailUsers
 {
     public class EmailUserCreate : IEmailUserCreate
     {

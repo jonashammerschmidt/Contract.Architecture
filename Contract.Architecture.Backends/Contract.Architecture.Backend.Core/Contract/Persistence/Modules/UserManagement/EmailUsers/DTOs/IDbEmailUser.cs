@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers
 {
     public interface IDbEmailUser
     {

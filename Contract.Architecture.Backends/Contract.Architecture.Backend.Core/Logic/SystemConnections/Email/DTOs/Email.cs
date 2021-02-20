@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Email;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.SystemConnections.Email;
 
 namespace Contract.Architecture.Backend.Core.Logic.SystemConnections.Email
 {

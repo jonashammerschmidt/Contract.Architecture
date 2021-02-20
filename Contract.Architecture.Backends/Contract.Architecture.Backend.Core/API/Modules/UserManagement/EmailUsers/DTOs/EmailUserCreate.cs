@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
 using System.ComponentModel.DataAnnotations;
 
 namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers

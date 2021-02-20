@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.ScheduledJob;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.JobScheduler;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Contract.Architecture.Backend.Core.Logic.Services.ScheduledJobs
+namespace Contract.Architecture.Backend.Core.Logic.JobSchedulers
 {
     public static class ScheduledJobExtension
     {

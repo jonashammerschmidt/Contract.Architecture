@@ -1,9 +1,9 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers
 {
     internal class EmailUsersRepository : IEmailUsersRepository
     {

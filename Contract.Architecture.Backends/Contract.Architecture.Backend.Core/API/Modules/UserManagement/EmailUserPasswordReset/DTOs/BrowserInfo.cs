@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
 using System.ComponentModel.DataAnnotations;
 
 namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUserPasswordReset

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.SessionManagement.Sessions
 {
     public interface ISession
     {

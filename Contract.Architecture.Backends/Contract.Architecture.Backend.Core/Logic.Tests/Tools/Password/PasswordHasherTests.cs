@@ -1,8 +1,8 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
 using Contract.Architecture.Backend.Core.Logic.Tools.Password;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Services.Password
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Tools.Password
 {
     [TestClass]
     public class PasswordHasherTests
@@ -12,14 +12,14 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Services.Password
         {
             // Arrange
             string password = ")Test&Password123(";
-            PasswordHasher PasswordHasher = new PasswordHasher();
+            PasswordHasher passwordHasher = new PasswordHasher();
 
             // Act
-            IPasswordHash passwordHash = PasswordHasher.HashPassword(password);
-            IPasswordHash passwordHash2 = PasswordHasher.HashPassword(password);
+            IPasswordHash passwordHash = passwordHasher.HashPassword(password);
+            IPasswordHash passwordHash2 = passwordHasher.HashPassword(password);
 
             // Assert
-            Assert.AreNotEqual(passwordHash.PasswordHash, passwordHash2.PasswordHash);
+            Assert.AreNotEqual(passwordHash.Hash, passwordHash2.Hash);
             Assert.AreNotEqual(passwordHash.Salt, passwordHash2.Salt);
         }
 
@@ -29,15 +29,15 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Services.Password
             // Arrange
             string password = ")Test&Password123(";
             string salt = "50000.lrqV9R0IfJiFGjQN1wQvTIlhCPYAwgFS+7WjcjsAjAO/1g==";
-            PasswordHasher PasswordHasher = new PasswordHasher();
+            PasswordHasher passwordHasher = new PasswordHasher();
 
             // Act
-            IPasswordHash passwordHash = PasswordHasher.HashPassword(password, salt);
+            IPasswordHash passwordHash = passwordHasher.HashPassword(password, salt);
 
             // Assert
             string hash = "dsrVUMMTclkN6d5xky/3/M2ervMlIvPByFA/g7LuORGLl1K6O0oXvKqmN+0/nakTqDhSUu3+tCKrSm8RXNkEng==";
 
-            Assert.AreEqual(hash, passwordHash.PasswordHash);
+            Assert.AreEqual(hash, passwordHash.Hash);
             Assert.AreEqual(salt, passwordHash.Salt);
         }
 
@@ -46,11 +46,11 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Services.Password
         {
             // Arrange
             string password = ")Test&Password123(";
-            PasswordHasher PasswordHasher = new PasswordHasher();
-            IPasswordHash passwordHash = PasswordHasher.HashPassword(password);
+            PasswordHasher passwordHasher = new PasswordHasher();
+            IPasswordHash passwordHash = passwordHasher.HashPassword(password);
 
             // Act
-            bool isValid = PasswordHasher.ComparePasswords(password, passwordHash.PasswordHash, passwordHash.Salt);
+            bool isValid = passwordHasher.ComparePasswords(password, passwordHash.Hash, passwordHash.Salt);
 
             // Assert
             Assert.IsTrue(isValid);

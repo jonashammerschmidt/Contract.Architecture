@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions
 {
     [Table("Sessions")]
     public partial class EfSession

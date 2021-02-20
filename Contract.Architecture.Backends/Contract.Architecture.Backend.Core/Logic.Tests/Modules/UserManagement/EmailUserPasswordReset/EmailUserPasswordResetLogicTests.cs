@@ -1,21 +1,21 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Email;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUserPasswortReset;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset;
-using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Services.Password;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
+using Contract.Architecture.Backend.Core.Contract.Logic.SystemConnections.Email;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUserPasswortResetTokens;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset;
+using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Logic.Tools.Password;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.UserManagement.EmailUserPasswordReset
 {
     [TestClass]
     public class EmailUserPasswordResetLogicTests
@@ -166,14 +166,14 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
             // Arrange
             Mock<IEmailUsersRepository> emailUsersRepository = this.SetupEmailUsersRepositoryExisting();
             Mock<IEmailUserPasswortResetTokensRepository> emailUserPasswordResetTokenRepository = this.SetupEmailUserPasswordResetTokenRepositoryDefault();
-            Mock<IPasswordHasher> PasswordHasher = this.SetupPasswordHasherDefault();
+            Mock<IPasswordHasher> passwordHasher = this.SetupPasswordHasherDefault();
             Mock<IDateTimeProvider> dateTimeProvider = this.SetupDateTimeProviderDefault();
 
             EmailUserPasswordResetLogic emailUserPasswordResetLogic = new EmailUserPasswordResetLogic(
                 emailUserPasswordResetTokenRepository.Object,
                 emailUsersRepository.Object,
                 null,
-                PasswordHasher.Object,
+                passwordHasher.Object,
                 null,
                 dateTimeProvider.Object,
                 Mock.Of<ILogger<EmailUserPasswordResetLogic>>(),
@@ -209,14 +209,14 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
 
         private Mock<IPasswordHasher> SetupPasswordHasherDefault()
         {
-            var PasswordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
-            PasswordHasher.Setup(service => service.HashPassword(Password))
+            var passwordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
+            passwordHasher.Setup(service => service.HashPassword(Password))
                 .Returns(new PasswordHash()
                 {
-                    PasswordHash = PasswordHash,
+                    Hash = PasswordHash,
                     Salt = PasswordSalt
                 });
-            return PasswordHasher;
+            return passwordHasher;
         }
 
         private Mock<IDateTimeProvider> SetupDateTimeProviderDefault()

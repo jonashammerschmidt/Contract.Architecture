@@ -1,9 +1,9 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.ScheduledJob;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.JobScheduler;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     internal class EmailUserPasswordResetExpirationScheduledJob : IScheduledJob
     {

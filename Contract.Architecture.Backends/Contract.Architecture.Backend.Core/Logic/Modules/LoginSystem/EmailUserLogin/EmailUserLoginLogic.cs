@@ -1,31 +1,31 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.LoginSystem.EmailUserLogin;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using Contract.Architecture.Backend.Core.Logic.LogicResults;
 using Microsoft.Extensions.Logging;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Modules.LoginSystem.EmailUserLogin
 {
     internal class EmailUserLoginLogic : IEmailUserLoginLogic
     {
         private readonly IEmailUsersRepository emailUsersRepository;
         private readonly ISessionsCrudLogic sessionsLogic;
 
-        private readonly IPasswordHasher PasswordHasher;
+        private readonly IPasswordHasher passwordHasher;
         private readonly ILogger<EmailUserLoginLogic> logger;
 
         public EmailUserLoginLogic(
             IEmailUsersRepository emailUsersRepository,
             ISessionsCrudLogic sessionsLogic,
-            IPasswordHasher PasswordHasher,
+            IPasswordHasher passwordHasher,
             ILogger<EmailUserLoginLogic> logger)
         {
             this.emailUsersRepository = emailUsersRepository;
             this.sessionsLogic = sessionsLogic;
 
-            this.PasswordHasher = PasswordHasher;
+            this.passwordHasher = passwordHasher;
             this.logger = logger;
         }
 
@@ -70,7 +70,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
 
         private bool IsPasswordValid(string password, IDbEmailUser emailUser)
         {
-            return this.PasswordHasher.ComparePasswords(password, emailUser.PasswordHash, emailUser.PasswordSalt);
+            return this.passwordHasher.ComparePasswords(password, emailUser.PasswordHash, emailUser.PasswordSalt);
         }
     }
 }

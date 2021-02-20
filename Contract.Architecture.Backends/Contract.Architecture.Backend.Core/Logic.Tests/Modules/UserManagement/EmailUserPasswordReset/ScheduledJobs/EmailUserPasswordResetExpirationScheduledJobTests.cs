@@ -1,10 +1,10 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
-using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
+using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.UserManagement.EmailUserPasswordReset
 {
     [TestClass]
     public class EmailUserPasswordResetExpirationScheduledJobTests

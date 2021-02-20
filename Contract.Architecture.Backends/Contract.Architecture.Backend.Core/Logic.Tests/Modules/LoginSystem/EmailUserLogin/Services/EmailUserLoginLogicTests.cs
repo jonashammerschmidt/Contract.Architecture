@@ -1,14 +1,15 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Logic.Modules.LoginSystem.EmailUserLogin;
+using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.LoginSystem.EmailUserLogin
 {
     [TestClass]
     public class EmailUserLoginLogicTests
@@ -26,12 +27,12 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
         {
             // Arrange
             Mock<IEmailUsersRepository> emailUsersRepository = this.SetupEmailUsersRepositoryNotFound();
-            Mock<IPasswordHasher> PasswordHasher = this.PasswordHasherDefaultComparePasswords();
+            Mock<IPasswordHasher> passwordHasher = this.PasswordHasherDefaultComparePasswords();
 
             EmailUserLoginLogic emailUserLoginLogic = new EmailUserLoginLogic(
                 emailUsersRepository.Object,
                 null,
-                PasswordHasher.Object,
+                passwordHasher.Object,
                 Mock.Of<ILogger<EmailUserLoginLogic>>());
 
             // Act
@@ -46,12 +47,12 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
         {
             // Arrange
             Mock<IEmailUsersRepository> emailUsersRepository = this.EmailUsersRepositoryDefaultGetEmailUser();
-            Mock<IPasswordHasher> PasswordHasher = this.PasswordHasherFailingComparePasswords();
+            Mock<IPasswordHasher> passwordHasher = this.PasswordHasherFailingComparePasswords();
 
             EmailUserLoginLogic emailUserLoginLogic = new EmailUserLoginLogic(
                 emailUsersRepository.Object,
                 null,
-                PasswordHasher.Object,
+                passwordHasher.Object,
                 Mock.Of<ILogger<EmailUserLoginLogic>>());
 
             // Act
@@ -66,13 +67,13 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
         {
             // Arrange
             Mock<IEmailUsersRepository> emailUsersRepository = this.EmailUsersRepositoryDefaultGetEmailUser();
-            Mock<IPasswordHasher> PasswordHasher = this.PasswordHasherDefaultComparePasswords();
+            Mock<IPasswordHasher> passwordHasher = this.PasswordHasherDefaultComparePasswords();
             Mock<ISessionsCrudLogic> sessionsLogic = this.SessionsLogicDefaultCreateSessionForEmailUser();
 
             EmailUserLoginLogic emailUserLoginLogic = new EmailUserLoginLogic(
                 emailUsersRepository.Object,
                 sessionsLogic.Object,
-                PasswordHasher.Object,
+                passwordHasher.Object,
                 Mock.Of<ILogger<EmailUserLoginLogic>>());
 
             // Act
@@ -85,8 +86,8 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
 
         private Mock<IPasswordHasher> PasswordHasherDefaultComparePasswords()
         {
-            Mock<IPasswordHasher> PasswordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
-            PasswordHasher.Setup(service => service.ComparePasswords(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            Mock<IPasswordHasher> passwordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
+            passwordHasher.Setup(service => service.ComparePasswords(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string passwordToHash, string passwordHash, string passwordSalt) =>
                 {
                     Assert.AreEqual(passwordToHash, Passwort);
@@ -94,13 +95,13 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
                     Assert.AreEqual(passwordSalt, PasswortSalt);
                     return true;
                 });
-            return PasswordHasher;
+            return passwordHasher;
         }
 
         private Mock<IPasswordHasher> PasswordHasherFailingComparePasswords()
         {
-            Mock<IPasswordHasher> PasswordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
-            PasswordHasher.Setup(service => service.ComparePasswords(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            Mock<IPasswordHasher> passwordHasher = new Mock<IPasswordHasher>(MockBehavior.Strict);
+            passwordHasher.Setup(service => service.ComparePasswords(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string passwordToHash, string passwordHash, string passwordSalt) =>
                 {
                     Assert.AreEqual(passwordToHash, Passwort);
@@ -108,7 +109,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Users.EmailUser
                     Assert.AreEqual(passwordSalt, PasswortSalt);
                     return false;
                 });
-            return PasswordHasher;
+            return passwordHasher;
         }
 
         private Mock<IEmailUsersRepository> EmailUsersRepositoryDefaultGetEmailUser()

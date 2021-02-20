@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
 using System.Security.Cryptography;
 using System.Text;
 

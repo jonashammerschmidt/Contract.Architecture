@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.API.Modules.LoginSystem.EmailUserLogin
 {
     public class EmailUserLogin
     {

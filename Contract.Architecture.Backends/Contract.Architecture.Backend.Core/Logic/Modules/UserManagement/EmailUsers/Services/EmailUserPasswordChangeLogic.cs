@@ -1,30 +1,30 @@
 ﻿using Contract.Architecture.Backend.Core.Contract;
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using Contract.Architecture.Backend.Core.Logic.LogicResults;
 using Microsoft.Extensions.Logging;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers
 {
     internal class EmailUserPasswordChangeLogic : IEmailUserPasswordChangeLogic
     {
         private readonly IEmailUsersRepository emailUsersRepository;
 
-        private readonly IPasswordHasher PasswordHasher;
+        private readonly IPasswordHasher passwordHasher;
         private readonly ISessionContext sessionContext;
         private readonly ILogger<EmailUserPasswordChangeLogic> logger;
 
         public EmailUserPasswordChangeLogic(
             IEmailUsersRepository emailUsersRepository,
-            IPasswordHasher PasswordHasher,
+            IPasswordHasher passwordHasher,
             ISessionContext sessionContext,
             ILogger<EmailUserPasswordChangeLogic> logger)
         {
             this.emailUsersRepository = emailUsersRepository;
 
-            this.PasswordHasher = PasswordHasher;
+            this.passwordHasher = passwordHasher;
             this.sessionContext = sessionContext;
             this.logger = logger;
         }
@@ -46,15 +46,15 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
 
         private void UpdateEmailUserWithNewPassword(IDbEmailUser emailUser, string newPassword)
         {
-            IPasswordHash hash = this.PasswordHasher.HashPassword(newPassword);
-            emailUser.PasswordHash = hash.PasswordHash;
+            IPasswordHash hash = this.passwordHasher.HashPassword(newPassword);
+            emailUser.PasswordHash = hash.Hash;
             emailUser.PasswordSalt = hash.Salt;
             this.emailUsersRepository.UpdateEmailUser(emailUser);
         }
 
         private bool IsPasswordValid(string password, IDbEmailUser emailUser)
         {
-            return this.PasswordHasher.ComparePasswords(password, emailUser.PasswordHash, emailUser.PasswordSalt);
+            return this.passwordHasher.ComparePasswords(password, emailUser.PasswordHash, emailUser.PasswordSalt);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUserPasswortReset
+namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUserPasswortResetTokens
 {
     public interface IDbEmailUserPasswordResetToken
     {

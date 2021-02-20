@@ -1,8 +1,8 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.LoginSystem.EmailUserLogin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.API.Modules.LoginSystem.EmailUserLogin
 {
     [ApiController]
     [Route("api/users/email-user")]

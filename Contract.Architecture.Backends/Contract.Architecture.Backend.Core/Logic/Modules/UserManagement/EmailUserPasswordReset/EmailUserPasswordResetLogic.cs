@@ -1,17 +1,17 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Email;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUserPasswortReset;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
+using Contract.Architecture.Backend.Core.Contract.Logic.SystemConnections.Email;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUserPasswortResetTokens;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using Contract.Architecture.Backend.Core.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Logic.Services.Email;
+using Contract.Architecture.Backend.Core.Logic.SystemConnections.Email;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     internal class EmailUserPasswordResetLogic : IEmailUserPasswordResetLogic
     {
@@ -19,7 +19,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswo
         private readonly IEmailUsersRepository emailUsersRepository;
 
         private readonly IEmailClient emailClient;
-        private readonly IPasswordHasher PasswordHasher;
+        private readonly IPasswordHasher passwordHasher;
         private readonly ISHA256TokenGenerator sha256TokenGenerator;
         private readonly IDateTimeProvider dateTimeProvider;
         private readonly ILogger<EmailUserPasswordResetLogic> logger;
@@ -32,7 +32,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswo
             IEmailUserPasswortResetTokensRepository emailUserPasswordResetTokenRepository,
             IEmailUsersRepository emailUsersRepository,
             IEmailClient emailClient,
-            IPasswordHasher PasswordHasher,
+            IPasswordHasher passwordHasher,
             ISHA256TokenGenerator sha256TokenGenerator,
             IDateTimeProvider dateTimeProvider,
             ILogger<EmailUserPasswordResetLogic> logger,
@@ -41,7 +41,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswo
             this.emailUserPasswordResetTokenRepository = emailUserPasswordResetTokenRepository;
             this.emailUsersRepository = emailUsersRepository;
             this.emailClient = emailClient;
-            this.PasswordHasher = PasswordHasher;
+            this.passwordHasher = passwordHasher;
             this.sha256TokenGenerator = sha256TokenGenerator;
             this.dateTimeProvider = dateTimeProvider;
 
@@ -128,8 +128,8 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswo
 
         private void UpdateEmailUserWithNewPassword(IDbEmailUser emailUser, string newPassword)
         {
-            IPasswordHash hash = this.PasswordHasher.HashPassword(newPassword);
-            emailUser.PasswordHash = hash.PasswordHash;
+            IPasswordHash hash = this.passwordHasher.HashPassword(newPassword);
+            emailUser.PasswordHash = hash.Hash;
             emailUser.PasswordSalt = hash.Salt;
             this.emailUsersRepository.UpdateEmailUser(emailUser);
         }

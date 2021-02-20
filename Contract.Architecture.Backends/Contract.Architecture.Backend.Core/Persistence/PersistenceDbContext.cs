@@ -1,6 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUserPasswortReset;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
+using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

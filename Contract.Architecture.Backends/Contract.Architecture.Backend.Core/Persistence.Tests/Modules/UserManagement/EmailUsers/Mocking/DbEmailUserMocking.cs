@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Tests.Mocking
+namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.UserManagement.EmailUsers
 {
     internal static class DbEmailUserMocking
     {

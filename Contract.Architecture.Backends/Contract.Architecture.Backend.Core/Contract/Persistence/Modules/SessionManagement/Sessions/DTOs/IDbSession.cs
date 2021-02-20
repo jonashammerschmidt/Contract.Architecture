@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions
 {
     public interface IDbSession
     {

@@ -1,4 +1,4 @@
-﻿namespace Contract.Architecture.Backend.Core.Logic.Modules.Sessions.Sessions
+﻿namespace Contract.Architecture.Backend.Core.Logic.Modules.SessionManagement.Sessions
 {
     internal class SessionExpirationOptions : OptionsFromConfiguration
     {

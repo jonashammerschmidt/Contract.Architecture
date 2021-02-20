@@ -1,12 +1,11 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Persistence.Tests.Mocking;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.UserManagement.EmailUsers
 {
     [TestClass]
     public class EmailUsersRepositoryTests

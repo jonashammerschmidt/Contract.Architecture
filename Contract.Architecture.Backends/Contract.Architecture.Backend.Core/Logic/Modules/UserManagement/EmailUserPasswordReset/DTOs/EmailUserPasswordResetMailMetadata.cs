@@ -1,6 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUserPasswordReset
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     internal class EmailUserPasswordResetMailMetadata
     {

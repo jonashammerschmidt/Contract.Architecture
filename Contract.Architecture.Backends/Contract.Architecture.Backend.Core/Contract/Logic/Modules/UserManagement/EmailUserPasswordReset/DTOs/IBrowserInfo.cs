@@ -1,4 +1,4 @@
-﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset
+﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset
 {
     public interface IBrowserInfo
     {

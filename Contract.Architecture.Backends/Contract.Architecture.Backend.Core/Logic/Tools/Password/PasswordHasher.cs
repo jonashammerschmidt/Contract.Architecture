@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
 
 namespace Contract.Architecture.Backend.Core.Logic.Tools.Password
 {
@@ -21,7 +21,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Tools.Password
 
             PBKDF2Service cryptoService = new PBKDF2Service();
             passwordHash.Salt = cryptoService.GenerateSalt();
-            passwordHash.PasswordHash = cryptoService.Compute(password);
+            passwordHash.Hash = cryptoService.Compute(password);
 
             return passwordHash;
         }
@@ -32,7 +32,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Tools.Password
 
             PBKDF2Service cryptoService = new PBKDF2Service();
             passwordHash.Salt = salt;
-            passwordHash.PasswordHash = cryptoService.Compute(password, salt);
+            passwordHash.Hash = cryptoService.Compute(password, salt);
 
             return passwordHash;
         }

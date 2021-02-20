@@ -1,12 +1,12 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Tests.Mocking;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.SessionManagement.Sessions
 {
     [TestClass]
     public class SessionsRepositoryTests

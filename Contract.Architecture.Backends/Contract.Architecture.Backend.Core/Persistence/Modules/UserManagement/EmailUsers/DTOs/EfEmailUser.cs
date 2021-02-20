@@ -1,9 +1,9 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUserPasswortReset;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers
 {
     [Table("EmailUsers")]
     public partial class EfEmailUser

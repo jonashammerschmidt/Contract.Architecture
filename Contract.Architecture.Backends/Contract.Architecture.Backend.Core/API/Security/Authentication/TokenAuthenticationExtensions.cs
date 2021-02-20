@@ -1,4 +1,4 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.SessionManagement.Sessions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;

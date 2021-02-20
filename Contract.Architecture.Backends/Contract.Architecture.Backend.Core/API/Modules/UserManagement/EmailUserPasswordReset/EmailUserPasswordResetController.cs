@@ -1,6 +1,6 @@
 ﻿using Contract.Architecture.Backend.Core.API.Tools.UserAgent;
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUserPasswordReset;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Contract.Architecture.Backend.Core.API.Modules.Users.EmailUserPasswordReset

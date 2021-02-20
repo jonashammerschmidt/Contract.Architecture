@@ -1,11 +1,11 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Logic.Services.Identifier;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Logic.Tools.Identifier;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Services.Identifier
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Tools.Identifier
 {
     [TestClass]
     public class SHA256TokenGeneratorTests

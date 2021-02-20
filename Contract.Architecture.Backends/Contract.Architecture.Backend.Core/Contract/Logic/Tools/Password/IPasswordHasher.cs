@@ -1,4 +1,4 @@
-﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Services.Password
+﻿namespace Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password
 {
     public interface IPasswordHasher
     {

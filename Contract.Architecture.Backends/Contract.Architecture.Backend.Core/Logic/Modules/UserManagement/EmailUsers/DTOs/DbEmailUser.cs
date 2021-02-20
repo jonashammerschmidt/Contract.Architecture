@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers
 {
     internal class DbEmailUser : IDbEmailUser
     {

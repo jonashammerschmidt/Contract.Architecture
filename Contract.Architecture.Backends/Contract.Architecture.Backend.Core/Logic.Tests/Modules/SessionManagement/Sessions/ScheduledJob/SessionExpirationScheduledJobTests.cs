@@ -1,12 +1,12 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Services.Time;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions;
-using Contract.Architecture.Backend.Core.Logic.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Logic.Modules.SessionManagement.Sessions;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.Sessions
+namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.SessionManagement.Sessions
 {
     [TestClass]
     public class SessionExpirationScheduledJobTests

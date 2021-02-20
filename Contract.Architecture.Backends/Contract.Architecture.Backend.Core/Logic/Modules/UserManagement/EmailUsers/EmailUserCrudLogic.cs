@@ -1,31 +1,31 @@
 ﻿using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
-using Contract.Architecture.Backend.Core.Contract.Logic.Modules.Users.EmailUsers;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Identifier;
-using Contract.Architecture.Backend.Core.Contract.Logic.Services.Password;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Users.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
 using Contract.Architecture.Backend.Core.Logic.LogicResults;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
+namespace Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUsers
 {
     internal class EmailUserCrudLogic : IEmailUserCrudLogic
     {
         private readonly IEmailUsersRepository emailUsersRepository;
 
-        private readonly IPasswordHasher PasswordHasher;
+        private readonly IPasswordHasher passwordHasher;
         private readonly IGuidGenerator guidGenerator;
         private readonly ILogger<EmailUserCrudLogic> logger;
 
         public EmailUserCrudLogic(
             IEmailUsersRepository emailUsersRepository,
-            IPasswordHasher PasswordHasher,
+            IPasswordHasher passwordHasher,
             IGuidGenerator guidGenerator,
             ILogger<EmailUserCrudLogic> logger)
         {
             this.emailUsersRepository = emailUsersRepository;
 
-            this.PasswordHasher = PasswordHasher;
+            this.passwordHasher = passwordHasher;
             this.guidGenerator = guidGenerator;
             this.logger = logger;
         }
@@ -49,13 +49,13 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.Users.EmailUsers
 
         private DbEmailUser CreateNewEmailUser(IEmailUserCreate emailUserCreate)
         {
-            IPasswordHash passwordHash = this.PasswordHasher.HashPassword(emailUserCreate.Password);
+            IPasswordHash passwordHash = this.passwordHasher.HashPassword(emailUserCreate.Password);
 
             return new DbEmailUser()
             {
                 Id = this.guidGenerator.NewGuid(),
                 Email = emailUserCreate.Email,
-                PasswordHash = passwordHash.PasswordHash,
+                PasswordHash = passwordHash.Hash,
                 PasswordSalt = passwordHash.Salt
             };
         }

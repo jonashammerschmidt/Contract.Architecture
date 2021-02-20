@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Sessions.Sessions
+namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions
 {
     public interface ISessionsRepository
     {

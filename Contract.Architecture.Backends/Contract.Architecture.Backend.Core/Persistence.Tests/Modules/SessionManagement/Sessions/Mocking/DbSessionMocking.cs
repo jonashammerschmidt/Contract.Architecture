@@ -1,7 +1,7 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.Sessions.Sessions;
+﻿using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using System;
 
-namespace Contract.Architecture.Backend.Core.Persistence.Tests.Mocking
+namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.SessionManagement.Sessions
 {
     internal static class DbSessionMocking
     {
