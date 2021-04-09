@@ -1,0 +1,18 @@
+<mat-form-field appearance="outline" [formGroup]="formGroupInstance">
+    <mat-label>{{label}}</mat-label>
+    <mat-select disableOptionCentering panelClass="searchDropdownPanel" [formControlName]="formControlNameInstance">
+        <mat-option>
+            <ngx-mat-select-search [formControl]="filterCtrl"></ngx-mat-select-search>
+        </mat-option>
+
+        <mat-option *ngFor="let dataSourceItem of filteredDataSource | async" [value]="getId(dataSourceItem)">
+            {{getDisplayname(dataSourceItem)}}
+        </mat-option>
+    </mat-select>
+    <mat-error
+        *ngIf="formGroupInstance.controls[formControlNameInstance].touched && formGroupInstance.controls[formControlNameInstance].invalid">
+        <span *ngIf="formGroupInstance.controls[formControlNameInstance].errors.required">
+            Dieses Feld ist erfolderlich.
+        </span>
+    </mat-error>
+</mat-form-field>
