@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RestBodyOptions, RestService } from 'src/app/services/rest/rest.service';
+import { RestBodyOptions, RestService } from 'src/app/services/backend/rest.service';
 import { environment } from 'src/environments/environment';
 import { SessionService } from '../sessions/sessions.service';
 

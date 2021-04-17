@@ -10,8 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UiComponentsModule } from './components/ui/ui-components.module';
 import { SessionServicesModule } from './model/sessions/sessions-services.module';
-import { BackendCoreService } from './services/rest/backend-core.service';
-import { RestService } from './services/rest/rest.service';
+import { BackendCoreService } from './services/backend/backend-core.service';
+import { RestService } from './services/backend/rest.service';
 
 @NgModule({
   declarations: [

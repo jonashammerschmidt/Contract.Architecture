@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from './model/sessions/sessions.service';
-import { RestService } from './services/rest/rest.service';
+import { RestService } from './services/backend/rest.service';
 
 interface MenuItem {
   name: string;
