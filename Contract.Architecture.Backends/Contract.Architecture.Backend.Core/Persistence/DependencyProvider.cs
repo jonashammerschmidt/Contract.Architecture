@@ -1,6 +1,10 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Bankwesen.Banken;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Kundenstamm.Kunden;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUserPasswortResetTokens;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.UserManagement.EmailUsers;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Bankwesen.Banken;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Kundenstamm.Kunden;
 using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
@@ -14,6 +18,8 @@ namespace Contract.Architecture.Backend.Core.Persistence
         {
             services.AddDbContext<PersistenceDbContext>();
 
+            StartupBankwesen(services);
+            StartupKundenstamm(services);
             StartupUsers(services);
             StartupSessions(services);
         }
@@ -27,6 +33,18 @@ namespace Contract.Architecture.Backend.Core.Persistence
         private static void StartupSessions(IServiceCollection services)
         {
             services.AddScoped<ISessionsRepository, SessionsRepository>();
+        }
+
+        private static void StartupBankwesen(IServiceCollection services)
+        {
+            // Banken
+            services.AddScoped<IBankenCrudRepository, BankenCrudRepository>();
+        }
+
+        private static void StartupKundenstamm(IServiceCollection services)
+        {
+            // Kunden
+            services.AddScoped<IKundenCrudRepository, KundenCrudRepository>();
         }
     }
 }

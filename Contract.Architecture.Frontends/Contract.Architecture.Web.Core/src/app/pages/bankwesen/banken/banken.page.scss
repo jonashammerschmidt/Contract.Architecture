@@ -1,0 +1,36 @@
+.banken-page {
+    height: 100%;
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content;
+        grid-template-rows: 50px min-content;
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        button {
+            height: min-content;
+        }
+    }
+
+    .table-container {
+        height: calc(100% - 100px);
+        overflow: auto;
+
+        table {
+            width: 100%;
+        }
+
+        .mat-row {
+            transition: background-color 0.1s ease-in-out;
+
+            &:hover {
+                background-color: #ebebeb;
+            }
+        }
+    }
+}

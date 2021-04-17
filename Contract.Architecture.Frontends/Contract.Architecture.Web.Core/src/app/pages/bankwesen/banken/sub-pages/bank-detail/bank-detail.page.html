@@ -1,0 +1,88 @@
+<div class="bank-detail-page" *ngIf="bank">
+    <mat-card>
+        <div class="toolbar">
+            <h1>Bank: {{bank.name}}</h1>
+            <button mat-flat-button (click)="onCancelClicked()">
+                Schließen
+            </button>
+            <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+                <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+                Ändern
+            </button>
+            <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+                <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+                Löschen
+            </button>
+        </div>
+
+        <mat-tab-group mat-align-tabs="start">
+            <mat-tab label="Stammdaten">
+                <p [attr.aria-label]="'Name: ' + bank.name">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Name:</span>
+                    <br>
+                    <span aria-hidden="true">{{bank.name}}</span>
+                </p>
+
+                <p [attr.aria-label]="'Boolean: ' + (bank.boolean) ? 'aktiv' : 'inaktiv' ">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Boolean:</span>
+                    <br>
+                    <mat-icon color="accent" *ngIf="bank.boolean">
+                        check_box
+                    </mat-icon>
+                    <mat-icon style="color: gray" *ngIf="!bank.boolean">
+                        check_box_outline_blank
+                    </mat-icon>
+                </p>
+
+                <p [attr.aria-label]="'Date Time: ' + bank.dateTime">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Date Time:</span>
+                    <br>
+                    <span aria-hidden="true">{{bank.dateTime | date:'dd. MMM. yyyy, HH:mm'}}</span>
+                </p>
+
+                <p [attr.aria-label]="'Double: ' + bank.double">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Double:</span>
+                    <br>
+                    <span aria-hidden="true">{{bank.double}}</span>
+                </p>
+
+                <p [attr.aria-label]="'Guid: ' + bank.guid">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Guid:</span>
+                    <br>
+                    <span aria-hidden="true">{{bank.guid}}</span>
+                </p>
+
+                <p [attr.aria-label]="'Integer: ' + bank.integer">
+                    <span style="font-size: 0.8em;" aria-hidden="true">Integer:</span>
+                    <br>
+                    <span aria-hidden="true">{{bank.integer}}</span>
+                </p>
+            </mat-tab>
+            <mat-tab label="Kunden">
+                <div class="tab-content">
+                    <h2>Kunden</h2>
+                    <div class="table-container">
+                        <table mat-table [dataSource]="kundenTableDataSource">
+
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="detail">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element" width="10%">
+                                    <button mat-button role="link">Detail</button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="kundenGridColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: kundenGridColumns;"
+                                [routerLink]="['/kundenstamm/kunden/detail', row.id]"></tr>
+                        </table>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
+</div>

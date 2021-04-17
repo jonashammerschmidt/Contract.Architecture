@@ -1,0 +1,41 @@
+.kunde-detail-page {
+    mat-card {
+        padding-bottom: 18px;
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: auto min-content min-content min-content;
+            grid-gap: 8px;
+            align-items: center;
+
+            h1 {
+                font-size: 1.2em;
+            }
+
+            .save-button {
+                height: min-content;
+            }
+        }
+
+        a mat-icon {
+            transform: translateY(2px);
+        }
+        
+        .table-container {
+            height: calc(100% - 100px);
+            overflow: auto;
+    
+            table {
+                width: 100%;
+            }
+    
+            .mat-row {
+                transition: background-color 0.1s ease-in-out;
+    
+                &:hover {
+                    background-color: #ebebeb;
+                }
+            }
+        }
+    }
+}

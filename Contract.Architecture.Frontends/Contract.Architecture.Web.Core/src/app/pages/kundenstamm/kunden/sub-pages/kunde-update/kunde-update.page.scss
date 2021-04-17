@@ -1,0 +1,26 @@
+.kunde-update-page {
+    mat-card {
+        padding-bottom: 18px;
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: auto min-content min-content;
+            grid-gap: 8px;
+            align-items: center;
+
+            h1 {
+                font-size: 1.2em;
+            }
+        }
+
+        mat-form-field {
+            width: 100%;
+            padding: 8px 0;
+        }
+
+        mat-checkbox {
+            display: block;
+            margin-left: 6px;
+        }
+    }
+}

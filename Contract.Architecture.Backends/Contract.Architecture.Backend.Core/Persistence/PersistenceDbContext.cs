@@ -1,4 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Bankwesen.Banken;
+using Contract.Architecture.Backend.Core.Persistence.Modules.Kundenstamm.Kunden;
+using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,10 @@ namespace Contract.Architecture.Backend.Core.Persistence
         public virtual DbSet<EfEmailUserPasswordResetToken> EmailUserPasswordResetTokens { get; set; }
 
         public virtual DbSet<EfSession> Sessions { get; set; }
+
+        public virtual DbSet<EfBank> Banken { get; set; }
+
+        public virtual DbSet<EfKunde> Kunden { get; set; }
 
         public static PersistenceDbContext CustomInstantiate(DbContextOptions<PersistenceDbContext> options)
         {
@@ -93,6 +99,36 @@ namespace Contract.Architecture.Backend.Core.Persistence
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<EfBank>(entity =>
+            {
+                entity.ToTable("Banken");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.DateTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<EfKunde>(entity =>
+            {
+                entity.ToTable("Kunden");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.DateTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Bank)
+                    .WithMany(p => p.Kunden)
+                    .HasForeignKey(d => d.BankId)
+                    .HasConstraintName("FK_Kunden_BankId");
             });
 
             this.OnModelCreatingPartial(modelBuilder);

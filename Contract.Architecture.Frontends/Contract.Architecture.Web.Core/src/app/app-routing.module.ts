@@ -15,6 +15,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/change-password/change-password.module').then(m => m.ChangePasswordModule)
   },
   {
+    path: 'bankwesen',
+    loadChildren: () => import('./pages/bankwesen/bankwesen-pages.module').then(m => m.BankwesenPagesModule)
+  },
+  {
+    path: 'kundenstamm',
+    loadChildren: () => import('./pages/kundenstamm/kundenstamm-pages.module').then(m => m.KundenstammPagesModule)
+  },
+  {
     path: '**',
     redirectTo: '/home'
   }

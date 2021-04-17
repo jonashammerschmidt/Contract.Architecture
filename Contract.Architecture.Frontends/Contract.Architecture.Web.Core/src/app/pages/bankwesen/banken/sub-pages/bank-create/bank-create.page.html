@@ -1,0 +1,83 @@
+<div class="bank-detail-page">
+    <mat-card *ngIf="bankCreateForm">
+        <div class="toolbar">
+            <h1>Bank erstellen</h1>
+            <button mat-flat-button (click)="onCancelClicked()">
+                Abbrechen
+            </button>
+            <button mat-flat-button color="primary" (click)="onCreateClicked()">
+                <mat-icon class="mat-icon-button-fix">add</mat-icon>
+                Erstellen
+            </button>
+        </div>
+
+        <br>
+
+        <form [formGroup]="bankCreateForm">
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required="true" maxlength="256" placeholder="Name">
+                <mat-hint [align]="'end'">{{bankCreateForm.controls.name.value.length}} / 256</mat-hint>
+                <mat-error *ngIf="bankCreateForm.controls.name.touched && bankCreateForm.controls.name.invalid">
+                    <span *ngIf="bankCreateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="bankCreateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="boolean">
+                Boolean
+            </mat-checkbox>            <br>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Date Time</mat-label>
+                <input matInput formControlName="dateTime" required="true" placeholder="Date Time" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="bankCreateForm.controls.dateTime.touched && bankCreateForm.controls.dateTime.invalid">
+                    <span *ngIf="bankCreateForm.controls.dateTime.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="bankCreateForm.controls.dateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Double</mat-label>
+                <input matInput formControlName="double" type="number" required="true" placeholder="Double">
+                <mat-error *ngIf="bankCreateForm.controls.double.touched && bankCreateForm.controls.double.invalid">
+                    <span *ngIf="bankCreateForm.controls.double.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="bankCreateForm.controls.double.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Guid</mat-label>
+                <input matInput formControlName="guid" required="true" placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error *ngIf="bankCreateForm.controls.guid.touched && bankCreateForm.controls.guid.invalid">
+                    <span *ngIf="bankCreateForm.controls.guid.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="bankCreateForm.controls.guid.errors.pattern">
+                        Dieses Feld ist ungültig. Beispiel: 00000000-0000-0000-0000-000000000000.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Integer</mat-label>
+                <input matInput formControlName="integer" type="number" required="true" placeholder="Integer">
+                <mat-error *ngIf="bankCreateForm.controls.integer.touched && bankCreateForm.controls.integer.invalid">
+                    <span *ngIf="bankCreateForm.controls.integer.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="bankCreateForm.controls.integer.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</div>

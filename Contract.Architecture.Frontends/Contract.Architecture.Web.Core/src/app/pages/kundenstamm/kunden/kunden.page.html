@@ -1,0 +1,75 @@
+<div class="kunden-page">
+
+    <div class="toolbar">
+        <h1>Kunden</h1>
+        <button mat-flat-button color="primary" [routerLink]="['/kundenstamm/kunden/create']">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Kunde erstellen
+        </button>
+    </div>
+
+    <app-table-filter-bar [filterItems]="filterItems" [filterItemsValues]="filterValues"
+        (filterItemsValuesChange)="onFilterValuesChange($event)" (filterTermChange)="onFilterTermChange($event)">
+    </app-table-filter-bar>
+
+    <br>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="kundenTableDataSource" matSort matSortActive="name"
+            matSortDirection="asc">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element" > {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="boolean">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Boolean </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon color="accent" *ngIf="element.boolean" >
+                        check_box
+                    </mat-icon>
+                    <mat-icon style="color: gray" *ngIf="!element.boolean">
+                        check_box_outline_blank
+                    </mat-icon>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateTime">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.dateTime | date:'dd. MMM. yyyy, HH:mm'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="double">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Double </th>
+                <td mat-cell *matCellDef="let element" > {{element.double}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="guid">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Guid </th>
+                <td mat-cell *matCellDef="let element" > {{element.guid}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="integer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Integer </th>
+                <td mat-cell *matCellDef="let element" > {{element.integer}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bank">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Bank </th>
+                <td mat-cell *matCellDef="let element" > {{getBankName(element.bankId)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="detail">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" width="10%">
+                    <button mat-button role="link">Detail</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="kundenGridColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: kundenGridColumns;"
+                [routerLink]="['/kundenstamm/kunden/detail', row.id]"></tr>
+        </table>
+    </div>
+</div>

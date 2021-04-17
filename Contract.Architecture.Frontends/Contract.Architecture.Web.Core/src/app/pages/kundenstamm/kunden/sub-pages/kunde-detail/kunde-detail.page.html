@@ -1,0 +1,69 @@
+<div class="kunde-detail-page" *ngIf="kunde">
+    <mat-card>
+        <div class="toolbar">
+            <h1>Kunde: {{kunde.name}}</h1>
+            <button mat-flat-button (click)="onCancelClicked()">
+                Schließen
+            </button>
+            <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+                <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+                Ändern
+            </button>
+            <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+                <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+                Löschen
+            </button>
+        </div>
+
+        <p [attr.aria-label]="'Name: ' + kunde.name">
+            <span style="font-size: 0.8em;" aria-hidden="true">Name:</span>
+            <br>
+            <span aria-hidden="true">{{kunde.name}}</span>
+        </p>
+
+        <p [attr.aria-label]="'Boolean: ' + (kunde.boolean) ? 'aktiv' : 'inaktiv' ">
+            <span style="font-size: 0.8em;" aria-hidden="true">Boolean:</span>
+            <br>
+            <mat-icon color="accent" *ngIf="kunde.boolean">
+                check_box
+            </mat-icon>
+            <mat-icon style="color: gray" *ngIf="!kunde.boolean">
+                check_box_outline_blank
+            </mat-icon>
+        </p>
+
+        <p [attr.aria-label]="'Date Time: ' + kunde.dateTime">
+            <span style="font-size: 0.8em;" aria-hidden="true">Date Time:</span>
+            <br>
+            <span aria-hidden="true">{{kunde.dateTime | date:'dd. MMM. yyyy, HH:mm'}}</span>
+        </p>
+
+        <p [attr.aria-label]="'Double: ' + kunde.double">
+            <span style="font-size: 0.8em;" aria-hidden="true">Double:</span>
+            <br>
+            <span aria-hidden="true">{{kunde.double}}</span>
+        </p>
+
+        <p [attr.aria-label]="'Guid: ' + kunde.guid">
+            <span style="font-size: 0.8em;" aria-hidden="true">Guid:</span>
+            <br>
+            <span aria-hidden="true">{{kunde.guid}}</span>
+        </p>
+
+        <p [attr.aria-label]="'Integer: ' + kunde.integer">
+            <span style="font-size: 0.8em;" aria-hidden="true">Integer:</span>
+            <br>
+            <span aria-hidden="true">{{kunde.integer}}</span>
+        </p>
+
+        <p>
+            <span style="font-size: 0.8em;">Bank:</span>
+            <br>
+            <a [routerLink]="['/bankwesen/banken/detail', kunde.bank.id]" >
+                {{kunde.bank.name}}
+                <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+            </a>
+        </p>
+
+    </mat-card>
+</div>

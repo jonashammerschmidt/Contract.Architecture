@@ -1,0 +1,93 @@
+<div class="kunde-update-page">
+    <mat-card *ngIf="kundeUpdateForm">
+        <div class="toolbar">
+            <h1>Kunde ändern</h1>
+            <button mat-flat-button (click)="onCancelClicked()">
+                Abbrechen
+            </button>
+            <button mat-flat-button color="primary" (click)="onUpdateClicked()">
+                <mat-icon class="mat-icon-button-fix">save</mat-icon>
+                Speichern
+            </button>
+        </div>
+
+        <br>
+        
+        <form [formGroup]="kundeUpdateForm">
+            <mat-form-field appearance="outline">
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="id" placeholder="ID">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name"  maxlength="256" placeholder="Name">
+                <mat-hint *ngIf="kundeUpdateForm.controls.name.value" [align]="'end'">
+                    {{kundeUpdateForm.controls.name.value.length}} / 256
+                </mat-hint>
+                <mat-error *ngIf="kundeUpdateForm.controls.name.touched && kundeUpdateForm.controls.name.invalid">
+                    <span *ngIf="kundeUpdateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="kundeUpdateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="boolean">
+                Boolean
+            </mat-checkbox>            <br>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Date Time</mat-label>
+                <input matInput formControlName="dateTime"  placeholder="Date Time" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="kundeUpdateForm.controls.dateTime.touched && kundeUpdateForm.controls.dateTime.invalid">
+                    <span *ngIf="kundeUpdateForm.controls.dateTime.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="kundeUpdateForm.controls.dateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Double</mat-label>
+                <input matInput formControlName="double" type="number"  placeholder="Double">
+                <mat-error *ngIf="kundeUpdateForm.controls.double.touched && kundeUpdateForm.controls.double.invalid">
+                    <span *ngIf="kundeUpdateForm.controls.double.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="kundeUpdateForm.controls.double.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Guid</mat-label>
+                <input matInput formControlName="guid"  placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error *ngIf="kundeUpdateForm.controls.guid.touched && kundeUpdateForm.controls.guid.invalid">
+                    <span *ngIf="kundeUpdateForm.controls.guid.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="kundeUpdateForm.controls.guid.errors.pattern">
+                        Dieses Feld ist ungültig. Beispiel: 00000000-0000-0000-0000-000000000000.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Integer</mat-label>
+                <input matInput formControlName="integer" type="number"  placeholder="Integer">
+                <mat-error *ngIf="kundeUpdateForm.controls.integer.touched && kundeUpdateForm.controls.integer.invalid">
+                    <span *ngIf="kundeUpdateForm.controls.integer.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="kundeUpdateForm.controls.integer.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+
+            <app-search-dropdown-form [formGroupInstance]="kundeUpdateForm" [formControlNameInstance]="'bankId'"
+                label="Bank" idExpr="id" displayExpr="name" [dataSource]="banken"></app-search-dropdown-form>
+        </form>
+    </mat-card>
+</div>
