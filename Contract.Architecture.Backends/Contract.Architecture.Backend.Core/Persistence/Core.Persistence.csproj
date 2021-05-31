@@ -34,4 +34,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Contract\Core.Contract.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tools\" />
+  </ItemGroup>
 </Project>

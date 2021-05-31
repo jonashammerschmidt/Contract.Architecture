@@ -1,7 +1,6 @@
 ﻿using Contract.Architecture.Backend.Core.API.Security;
 using Contract.Architecture.Backend.Core.Contract;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Contract.Architecture.Backend.Core.API.Contexts
@@ -45,11 +44,6 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
             {
                 return this.httpContextAccessor.HttpContext.User.GetName();
             }
-        }
-
-        public static void Configure(IServiceCollection services)
-        {
-            services.AddScoped<ISessionContext, SessionContext>();
         }
 
         public bool HasPermission(string permissionName)
