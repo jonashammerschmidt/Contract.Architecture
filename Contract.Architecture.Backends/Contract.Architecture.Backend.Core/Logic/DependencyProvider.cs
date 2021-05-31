@@ -1,4 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Logic.Modules.LoginSystem.EmailUserLogin;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoennterKundenstamm.GegoennteKunden;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Contract.Logic.Modules.LoginSystem.EmailUserLogin;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUserPasswordReset;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.UserManagement.EmailUsers;
@@ -7,6 +9,8 @@ using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
 using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Password;
 using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Time;
 using Contract.Architecture.Backend.Core.Logic.JobSchedulers;
+using Contract.Architecture.Backend.Core.Logic.Modules.GegoennterKundenstamm.GegoennteKunden;
+using Contract.Architecture.Backend.Core.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
 using Contract.Architecture.Backend.Core.Logic.Modules.LoginSystem.EmailUserLogin;
 using Contract.Architecture.Backend.Core.Logic.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Logic.Modules.UserManagement.EmailUserPasswordReset;
@@ -24,6 +28,8 @@ namespace Contract.Architecture.Backend.Core.Logic
     {
         public static void Startup(IServiceCollection services, IConfiguration configuration)
         {
+            StartupGegoennterKundenstamm(services);
+            StartupGegoenntesBankwesen(services);
             StartupUsers(services, configuration);
             StartupSessions(services, configuration);
             StartupServices(services, configuration);
@@ -67,6 +73,18 @@ namespace Contract.Architecture.Backend.Core.Logic
 
             // SHA256 Token
             services.AddSingleton<ISHA256TokenGenerator, SHA256TokenGenerator>();
+        }
+
+        private static void StartupGegoenntesBankwesen(IServiceCollection services)
+        {
+            // GegoennteBanken
+            services.AddScoped<IGegoennteBankenCrudLogic, GegoennteBankenCrudLogic>();
+        }
+
+        private static void StartupGegoennterKundenstamm(IServiceCollection services)
+        {
+            // GegoennteKunden
+            services.AddScoped<IGegoennteKundenCrudLogic, GegoennteKundenCrudLogic>();
         }
     }
 }

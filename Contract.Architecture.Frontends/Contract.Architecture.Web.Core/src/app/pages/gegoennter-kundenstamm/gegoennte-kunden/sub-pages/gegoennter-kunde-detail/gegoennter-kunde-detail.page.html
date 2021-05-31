@@ -1,0 +1,77 @@
+<div class="loading" *ngIf="!gegoennterKunde">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="gegoennter-kunde-detail-page" *ngIf="gegoennterKunde">
+    <div class="toolbar">
+        <h1>Gegönnter Kunde: {{gegoennterKunde.name}}</h1>
+        <button mat-flat-button [routerLink]="['/gegoennter-kundenstamm/gegoennte-kunden']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+
+    <p [attr.aria-label]="'Name: ' + gegoennterKunde.name">
+        <span style="font-size: 0.8em;" aria-hidden="true">Name:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.name}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Name: ' + gegoennterKunde.gegoennterName">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Name:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.gegoennterName}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Boolean: ' + (gegoennterKunde.gegoennterBoolean) ? 'aktiv' : 'inaktiv' ">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Boolean:</span>
+        <br>
+        <mat-icon color="accent" *ngIf="gegoennterKunde.gegoennterBoolean">
+            check_box
+        </mat-icon>
+        <mat-icon style="color: gray" *ngIf="!gegoennterKunde.gegoennterBoolean">
+            check_box_outline_blank
+        </mat-icon>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Date Time: ' + gegoennterKunde.gegoennterDateTime.toLocaleString()">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Date Time:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.gegoennterDateTime | date:'dd. MMM. yyyy, HH:mm'}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Double: ' + gegoennterKunde.gegoennterDouble">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Double:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.gegoennterDouble}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Guid: ' + gegoennterKunde.gegoennterGuid">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Guid:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.gegoennterGuid}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gegönnter Integer: ' + gegoennterKunde.gegoennterInteger">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gegönnter Integer:</span>
+        <br>
+        <span aria-hidden="true">{{gegoennterKunde.gegoennterInteger}}</span>
+    </p>
+
+    <p>
+        <span style="font-size: 0.8em;">Beste Bank:</span>
+        <br>
+        <a [routerLink]="['/gegoenntes-bankwesen/gegoennte-banken/detail', gegoennterKunde.besteBank.id]" >
+            {{gegoennterKunde.besteBank.name}}
+            <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+        </a>
+    </p>
+
+</div>

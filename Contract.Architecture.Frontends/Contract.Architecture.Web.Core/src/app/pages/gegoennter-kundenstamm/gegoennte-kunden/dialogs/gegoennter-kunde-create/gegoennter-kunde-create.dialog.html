@@ -1,0 +1,107 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Gegönnter Kunde erstellen
+    </h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="gegoennter-kunde-create-dialog" *ngIf="gegoennterKundeCreateForm">
+        <form [formGroup]="gegoennterKundeCreateForm">
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required="true" maxlength="256" placeholder="Name">
+                <mat-hint [align]="'end'">{{gegoennterKundeCreateForm.controls.name.value.length}} / 256</mat-hint>
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.name.touched && gegoennterKundeCreateForm.controls.name.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Name</mat-label>
+                <input matInput formControlName="gegoennterName" required="true" maxlength="256" placeholder="Gegönnter Name">
+                <mat-hint [align]="'end'">{{gegoennterKundeCreateForm.controls.gegoennterName.value.length}} / 256</mat-hint>
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.gegoennterName.touched && gegoennterKundeCreateForm.controls.gegoennterName.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterName.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterName.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="gegoennterBoolean">
+                Gegönnter Boolean
+            </mat-checkbox>
+
+            <br>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Date Time</mat-label>
+                <input matInput formControlName="gegoennterDateTime"  placeholder="Gegönnter Date Time" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.gegoennterDateTime.touched && gegoennterKundeCreateForm.controls.gegoennterDateTime.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterDateTime.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterDateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Double</mat-label>
+                <input matInput formControlName="gegoennterDouble" type="number"  placeholder="Gegönnter Double">
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.gegoennterDouble.touched && gegoennterKundeCreateForm.controls.gegoennterDouble.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterDouble.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterDouble.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Guid</mat-label>
+                <input matInput formControlName="gegoennterGuid"  placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.gegoennterGuid.touched && gegoennterKundeCreateForm.controls.gegoennterGuid.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterGuid.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterGuid.errors.pattern">
+                        Dieses Feld ist ungültig. Beispiel: 00000000-0000-0000-0000-000000000000.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Integer</mat-label>
+                <input matInput formControlName="gegoennterInteger" type="number"  placeholder="Gegönnter Integer">
+                <mat-error *ngIf="gegoennterKundeCreateForm.controls.gegoennterInteger.touched && gegoennterKundeCreateForm.controls.gegoennterInteger.invalid">
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterInteger.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennterKundeCreateForm.controls.gegoennterInteger.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <app-search-dropdown-form [formGroupInstance]="gegoennterKundeCreateForm" [formControlNameInstance]="'besteBankId'"
+                label="Beste Bank" idExpr="id" displayExpr="name" required="true" [dataSource]="gegoennteBanken"></app-search-dropdown-form>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onCreateClicked()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Erstellen
+        </button>
+
+        <button mat-flat-button mat-dialog-close>
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

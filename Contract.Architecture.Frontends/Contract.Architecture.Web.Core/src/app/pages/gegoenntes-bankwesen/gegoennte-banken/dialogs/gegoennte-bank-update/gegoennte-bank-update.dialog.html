@@ -1,0 +1,112 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Gegönnte Bank ändern
+    </h1>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="loading" *ngIf="!gegoennteBankUpdateForm">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+    </div>
+    <div class="gegoennte-bank-update-dialog" *ngIf="gegoennteBankUpdateForm">
+        <form [formGroup]="gegoennteBankUpdateForm">
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required="true" maxlength="256" placeholder="Name">
+                <mat-hint *ngIf="gegoennteBankUpdateForm.controls.name.value" [align]="'end'">
+                    {{gegoennteBankUpdateForm.controls.name.value.length}} / 256
+                </mat-hint>
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.name.touched && gegoennteBankUpdateForm.controls.name.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Name</mat-label>
+                <input matInput formControlName="gegoennterName" required="true" maxlength="256" placeholder="Gegönnter Name">
+                <mat-hint *ngIf="gegoennteBankUpdateForm.controls.gegoennterName.value" [align]="'end'">
+                    {{gegoennteBankUpdateForm.controls.gegoennterName.value.length}} / 256
+                </mat-hint>
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.gegoennterName.touched && gegoennteBankUpdateForm.controls.gegoennterName.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterName.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterName.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="gegoennterBoolean">
+                Gegönnter Boolean
+            </mat-checkbox>
+
+            <br>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönntes Date Time</mat-label>
+                <input matInput formControlName="gegoenntesDateTime" required="true" placeholder="Gegönntes Date Time" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.gegoenntesDateTime.touched && gegoennteBankUpdateForm.controls.gegoenntesDateTime.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoenntesDateTime.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoenntesDateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Double</mat-label>
+                <input matInput formControlName="gegoennterDouble" type="number" required="true" placeholder="Gegönnter Double">
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.gegoennterDouble.touched && gegoennteBankUpdateForm.controls.gegoennterDouble.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterDouble.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterDouble.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnte Guid</mat-label>
+                <input matInput formControlName="gegoennteGuid" required="true" placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.gegoennteGuid.touched && gegoennteBankUpdateForm.controls.gegoennteGuid.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennteGuid.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennteGuid.errors.pattern">
+                        Dieses Feld ist ungültig. Beispiel: 00000000-0000-0000-0000-000000000000.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Integer</mat-label>
+                <input matInput formControlName="gegoennterInteger" type="number" required="true" placeholder="Gegönnter Integer">
+                <mat-error *ngIf="gegoennteBankUpdateForm.controls.gegoennterInteger.touched && gegoennteBankUpdateForm.controls.gegoennterInteger.invalid">
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterInteger.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankUpdateForm.controls.gegoennterInteger.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onUpdateClicked()" [disabled]="!gegoennteBankUpdateForm"
+            [attr.aria-disabled]="!gegoennteBankUpdateForm">
+            <mat-icon class="mat-icon-button-fix">save</mat-icon>
+            Speichern
+        </button>
+
+        <button mat-flat-button [mat-dialog-close]="false">
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>
