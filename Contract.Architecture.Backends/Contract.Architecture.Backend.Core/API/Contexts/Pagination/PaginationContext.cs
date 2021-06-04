@@ -1,4 +1,5 @@
-﻿using Contract.Architecture.Backend.Core.Contract.Contexts;
+﻿using Contract.Architecture.Backend.Core.API.Contexts.Pagination;
+using Contract.Architecture.Backend.Core.Contract.Contexts;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
 {
     public class PaginationContext : IPaginationContext
     {
+        private const int DefaultLimit = 10;
+
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public PaginationContext(IHttpContextAccessor httpContextAccessor)
@@ -29,7 +32,7 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
 
                         if (limit <= 0)
                         {
-                            return 10;
+                            return DefaultLimit;
                         }
 
                         return limit;
@@ -39,7 +42,7 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
                 {
                 }
 
-                return 10;
+                return DefaultLimit;
             }
         }
 
@@ -74,6 +77,11 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
         {
             get
             {
+                PaginationAttribute paginationAttribut =
+                    this.httpContextAccessor.HttpContext
+                        .GetEndpoint().Metadata
+                        .GetMetadata<PaginationAttribute>();
+
                 return this.httpContextAccessor.HttpContext.Request.Query
                     .Where((keyValue) =>
                     {
@@ -93,7 +101,10 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
                         };
 
                         return paginationFilterItem;
-                    });
+                    })
+                    .Where(paginationFilterItem => paginationAttribut.FilterFields
+                        .Select(filterField => filterField.ToLower())
+                        .Contains(paginationFilterItem.PropertyName.ToLower()));
             }
         }
 
@@ -101,6 +112,11 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
         {
             get
             {
+                PaginationAttribute paginationAttribut =
+                    this.httpContextAccessor.HttpContext
+                        .GetEndpoint().Metadata
+                        .GetMetadata<PaginationAttribute>();
+
                 return this.httpContextAccessor.HttpContext.Request.Query
                     .Where((keyValue) =>
                     {
@@ -119,7 +135,10 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
                         };
 
                         return paginationSort;
-                    });
+                    })
+                    .Where(paginationSortItem => paginationAttribut.SortFields
+                        .Select(sortField => sortField.ToLower())
+                        .Contains(paginationSortItem.PropertyName.ToLower()));
             }
         }
 

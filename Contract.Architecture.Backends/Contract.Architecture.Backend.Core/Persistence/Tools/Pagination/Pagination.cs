@@ -29,7 +29,7 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tools.Pagination
                     TotalCount = totalCount,
                 };
             }
-            catch
+            catch (Exception e)
             {
                 throw new PaginationException();
             }
@@ -42,99 +42,105 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tools.Pagination
                 string propertyName = char.ToUpper(filterElement.PropertyName[0]) + filterElement.PropertyName[1..];
                 string[] propertyValueSplit = filterElement.PropertyValue.Split('|');
 
-                if (Guid.TryParse(propertyValueSplit[0], out Guid propertyValueGuid))
+                if (filterElement.FilterType == FilterType.Equal)
                 {
-                    var propertyValueGuids = propertyValueSplit.Select(propertyValue => Guid.Parse(propertyValue));
-                    query = query.Where(p => propertyValueGuids.Contains(EF.Property<Guid>(p, propertyName)));
-                }
-                else if (int.TryParse(propertyValueSplit[0], out int propertyValueInt))
-                {
-                    switch (filterElement.FilterType)
+                    Type propertyType = typeof(Tin).GetProperty(propertyName).PropertyType;
+                    switch (Type.GetTypeCode(propertyType))
                     {
-                        case FilterType.GreaterThan:
-                            query = query.Where(p => EF.Property<int>(p, propertyName) > propertyValueInt);
+                        case TypeCode.Boolean:
+                            bool propertyValueBool = bool.Parse(propertyValueSplit[0]);
+                            query = query.Where(p => EF.Property<bool>(p, propertyName) == propertyValueBool);
                             break;
-
-                        case FilterType.GreaterThanOrEqual:
-                            query = query.Where(p => EF.Property<int>(p, propertyName) >= propertyValueInt);
+                        case TypeCode.DateTime:
+                            var propertyValueDateTimes = propertyValueSplit.Select(propertyValue => DateTime.Parse(propertyValue));
+                            query = query.Where(p => propertyValueDateTimes.Contains(EF.Property<DateTime>(p, propertyName)));
                             break;
-
-                        case FilterType.LessThan:
-                            query = query.Where(p => EF.Property<int>(p, propertyName) < propertyValueInt);
+                        case TypeCode.Int32:
+                            var propertyValueInts = propertyValueSplit.Select(propertyValue => int.Parse(propertyValue));
+                            query = query.Where(p => propertyValueInts.Contains(EF.Property<int>(p, propertyName)));
                             break;
-
-                        case FilterType.LessThanOrEqual:
-                            query = query.Where(p => EF.Property<int>(p, propertyName) <= propertyValueInt);
-                            break;
-
-                        case FilterType.Equal:
-                        default:
-                            var propertyValueIntegers = propertyValueSplit.Select(propertyValue => int.Parse(propertyValue));
-                            query = query.Where(p => propertyValueIntegers.Contains(EF.Property<int>(p, propertyName)));
-                            break;
-                    }
-                }
-                else if (double.TryParse(propertyValueSplit[0], out double propertyValueDouble))
-                {
-                    switch (filterElement.FilterType)
-                    {
-                        case FilterType.GreaterThan:
-                            query = query.Where(p => EF.Property<double>(p, propertyName) > propertyValueDouble);
-                            break;
-
-                        case FilterType.GreaterThanOrEqual:
-                            query = query.Where(p => EF.Property<double>(p, propertyName) >= propertyValueDouble);
-                            break;
-
-                        case FilterType.LessThan:
-                            query = query.Where(p => EF.Property<double>(p, propertyName) < propertyValueDouble);
-                            break;
-
-                        case FilterType.LessThanOrEqual:
-                            query = query.Where(p => EF.Property<double>(p, propertyName) <= propertyValueDouble);
-                            break;
-
-                        case FilterType.Equal:
-                        default:
+                        case TypeCode.Double:
                             var propertyValueDoubles = propertyValueSplit.Select(propertyValue => double.Parse(propertyValue));
                             query = query.Where(p => propertyValueDoubles.Contains(EF.Property<double>(p, propertyName)));
                             break;
-                    }
-                }
-                else if (bool.TryParse(propertyValueSplit[0], out bool propertyValueBool))
-                {
-                    query = query.Where(p => EF.Property<bool>(p, propertyName) == propertyValueBool);
-                }
-                else if (DateTime.TryParse(propertyValueSplit[0], out DateTime propertyValueDateTime))
-                {
-                    switch (filterElement.FilterType)
-                    {
-                        case FilterType.GreaterThan:
-                            query = query.Where(p => EF.Property<DateTime>(p, propertyName) > propertyValueDateTime);
+                        case TypeCode.String:
+                            query = query.LikeAny(propertyName, propertyValueSplit);
                             break;
+                        case TypeCode.Object:
+                            if (propertyType == typeof(Guid))
+                            {
+                                var propertyValueGuids = propertyValueSplit.Select(propertyValue => Guid.Parse(propertyValue));
+                                query = query.Where(p => propertyValueGuids.Contains(EF.Property<Guid>(p, propertyName)));
+                            }
 
-                        case FilterType.GreaterThanOrEqual:
-                            query = query.Where(p => EF.Property<DateTime>(p, propertyName) >= propertyValueDateTime);
-                            break;
-
-                        case FilterType.LessThan:
-                            query = query.Where(p => EF.Property<DateTime>(p, propertyName) < propertyValueDateTime);
-                            break;
-
-                        case FilterType.LessThanOrEqual:
-                            query = query.Where(p => EF.Property<DateTime>(p, propertyName) <= propertyValueDateTime);
-                            break;
-
-                        case FilterType.Equal:
-                        default:
-                            var propertyValueDateTimes = propertyValueSplit.Select(propertyValue => DateTime.Parse(propertyValue));
-                            query = query.Where(p => propertyValueDateTimes.Contains(EF.Property<DateTime>(p, propertyName)));
                             break;
                     }
                 }
                 else
                 {
-                    query = query.LikeAny(propertyName, propertyValueSplit);
+                    if (int.TryParse(propertyValueSplit[0], out int propertyValueInt))
+                    {
+                        switch (filterElement.FilterType)
+                        {
+                            case FilterType.GreaterThan:
+                                query = query.Where(p => EF.Property<int>(p, propertyName) > propertyValueInt);
+                                break;
+
+                            case FilterType.GreaterThanOrEqual:
+                                query = query.Where(p => EF.Property<int>(p, propertyName) >= propertyValueInt);
+                                break;
+
+                            case FilterType.LessThan:
+                                query = query.Where(p => EF.Property<int>(p, propertyName) < propertyValueInt);
+                                break;
+
+                            case FilterType.LessThanOrEqual:
+                                query = query.Where(p => EF.Property<int>(p, propertyName) <= propertyValueInt);
+                                break;
+                        }
+                    }
+                    else if (double.TryParse(propertyValueSplit[0], out double propertyValueDouble))
+                    {
+                        switch (filterElement.FilterType)
+                        {
+                            case FilterType.GreaterThan:
+                                query = query.Where(p => EF.Property<double>(p, propertyName) > propertyValueDouble);
+                                break;
+
+                            case FilterType.GreaterThanOrEqual:
+                                query = query.Where(p => EF.Property<double>(p, propertyName) >= propertyValueDouble);
+                                break;
+
+                            case FilterType.LessThan:
+                                query = query.Where(p => EF.Property<double>(p, propertyName) < propertyValueDouble);
+                                break;
+
+                            case FilterType.LessThanOrEqual:
+                                query = query.Where(p => EF.Property<double>(p, propertyName) <= propertyValueDouble);
+                                break;
+                        }
+                    }
+                    else if (DateTime.TryParse(propertyValueSplit[0], out DateTime propertyValueDateTime))
+                    {
+                        switch (filterElement.FilterType)
+                        {
+                            case FilterType.GreaterThan:
+                                query = query.Where(p => EF.Property<DateTime>(p, propertyName) > propertyValueDateTime);
+                                break;
+
+                            case FilterType.GreaterThanOrEqual:
+                                query = query.Where(p => EF.Property<DateTime>(p, propertyName) >= propertyValueDateTime);
+                                break;
+
+                            case FilterType.LessThan:
+                                query = query.Where(p => EF.Property<DateTime>(p, propertyName) < propertyValueDateTime);
+                                break;
+
+                            case FilterType.LessThanOrEqual:
+                                query = query.Where(p => EF.Property<DateTime>(p, propertyName) <= propertyValueDateTime);
+                                break;
+                        }
+                    }
                 }
             }
 
