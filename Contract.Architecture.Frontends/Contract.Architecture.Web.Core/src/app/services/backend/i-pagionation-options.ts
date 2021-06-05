@@ -21,7 +21,7 @@ export function toPaginationParams(paginationOptions: IPaginationOptions): strin
         paginationOptions.sortField.length > 0 &&
         paginationOptions.sortDirection &&
         paginationOptions.sortDirection.length > 0) {
-        requestUrl += `&sort.${paginationOptions.sortDirection}=${paginationOptions.sortField}`;
+        requestUrl += `&sort.${encodeURI(paginationOptions.sortDirection)}=${encodeURI(paginationOptions.sortField)}`;
     }
 
     if (paginationOptions.filters) {
@@ -29,18 +29,15 @@ export function toPaginationParams(paginationOptions: IPaginationOptions): strin
             if (filterItem.filterField &&
                 filterItem.filterField.length > 0) {
                 if (filterItem.equalsFilters && filterItem.equalsFilters.length > 0) {
-                    const orChar = encodeURI('|');
                     const filterValue = filterItem.equalsFilters
-                        .map(filterOrItem => filterOrItem).join(orChar);
-                    requestUrl += `&filter.${filterItem.filterField}=${filterValue}`;
+                    .map(filterOrItem => filterOrItem).join('|');
+                    requestUrl += `&filter.${encodeURI(filterItem.filterField)}=${encodeURI(filterValue)}`;
                 }
 
                 if (filterItem.containsFilters && filterItem.containsFilters.length > 0) {
-                    const percentChar = encodeURI('%');
-                    const orChar = encodeURI('|');
                     const filterValue = filterItem.containsFilters
-                        .map(filterOrItem => percentChar + filterOrItem + percentChar).join(orChar);
-                    requestUrl += `&filter.${filterItem.filterField}=${filterValue}`;
+                        .map(filterOrItem => '%' + filterOrItem + '%').join('|');
+                    requestUrl += `&filter.${encodeURI(filterItem.filterField)}=${encodeURI(filterValue)}`;
                 }
             }
         }
