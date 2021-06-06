@@ -1,0 +1,25 @@
+.table-filter-bar-dropdown-multiple {
+    padding: 6px;
+
+    &:hover,
+    &.open,
+    &:focus-within {
+        background-color: #c6c6c6;
+    }
+}
+
+mat-select {
+    width: fit-content !important;
+    min-width: 100%;
+}
+
+::ng-deep mat-select .mat-select-value {
+    width: fit-content;
+    min-width: 30px;
+    max-width: 300px;
+}
+
+::ng-deep mat-select .mat-select-placeholder {
+    width: fit-content;
+    min-width: 30px;
+}

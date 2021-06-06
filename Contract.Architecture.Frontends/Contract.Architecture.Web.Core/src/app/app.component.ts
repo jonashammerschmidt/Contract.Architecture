@@ -86,7 +86,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
       // Content-Element-Height - Content-Element-Padding
       this.calculatedContentHeightInPx = contentElement.clientHeight - 24;
-    });
+    }, 0);
   }
 
 }

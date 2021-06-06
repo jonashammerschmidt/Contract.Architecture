@@ -1,0 +1,13 @@
+<div class="table-filter-bar-dropdown-multiple" [class.open]="select?.panelOpen">
+    <mat-select #select disableOptionCentering panelClass="multiDropdownPanel" [multiple]="true" [placeholder]="label"
+        [ngModel]="selectedDataItems" (ngModelChange)="onSelectedDataSourceItemChange($event)">
+        <mat-option>
+            <ngx-mat-select-search [formControl]="filterCtrl" [searching]="dataSource.loading$ | async"
+                [hideClearSearchButton]="false"></ngx-mat-select-search>
+        </mat-option>
+
+        <mat-option *ngFor="let dataItem of data" [value]="dataItem">
+            {{getDisplayname(dataItem)}}
+        </mat-option>
+    </mat-select>
+</div>

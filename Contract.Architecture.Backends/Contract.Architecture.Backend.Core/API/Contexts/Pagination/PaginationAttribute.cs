@@ -10,6 +10,8 @@ namespace Contract.Architecture.Backend.Core.API.Contexts.Pagination
 
         public string[] FilterFields { get; set; }
 
+        public string[] CustomFilterFields { get; set; }
+
         public string[] SortFields { get; set; }
     }
 }

@@ -82,28 +82,25 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
                         .GetEndpoint().Metadata
                         .GetMetadata<PaginationAttribute>();
 
-                return this.httpContextAccessor.HttpContext.Request.Query
-                    .Where((keyValue) =>
-                    {
-                        bool isEqualFilter = Regex.IsMatch(keyValue.Key, @"^filter\.[a-zA-Z0-9]+$", RegexOptions.IgnoreCase);
-                        bool isAdvancedEqualFilter = Regex.IsMatch(keyValue.Key, @"^filter\.[a-zA-Z0-9]+\.(eq|gt|gte|lt|lte)$", RegexOptions.IgnoreCase);
-                        return isEqualFilter || isAdvancedEqualFilter;
-                    })
-                    .Select(keyValue =>
-                    {
-                        string[] filterSplit = keyValue.Key.Split(".");
-
-                        PaginationFilterItem paginationFilterItem = new PaginationFilterItem()
-                        {
-                            FilterType = this.ExtractFilterType(filterSplit),
-                            PropertyName = filterSplit[1],
-                            PropertyValue = keyValue.Value,
-                        };
-
-                        return paginationFilterItem;
-                    })
+                return this.GetFilterItemsFromQuery()
                     .Where(paginationFilterItem => paginationAttribut.FilterFields
                         .Select(filterField => filterField.ToLower())
+                        .Contains(paginationFilterItem.PropertyName.ToLower()));
+            }
+        }
+
+        public IEnumerable<IPaginationFilterItem> CustomFilter
+        {
+            get
+            {
+                PaginationAttribute paginationAttribut =
+                    this.httpContextAccessor.HttpContext
+                        .GetEndpoint().Metadata
+                        .GetMetadata<PaginationAttribute>();
+
+                return this.GetFilterItemsFromQuery()
+                    .Where(paginationFilterItem => paginationAttribut.CustomFilterFields
+                        .Select(customFilterFields => customFilterFields.ToLower())
                         .Contains(paginationFilterItem.PropertyName.ToLower()));
             }
         }
@@ -140,6 +137,30 @@ namespace Contract.Architecture.Backend.Core.API.Contexts
                         .Select(sortField => sortField.ToLower())
                         .Contains(paginationSortItem.PropertyName.ToLower()));
             }
+        }
+
+        private IEnumerable<IPaginationFilterItem> GetFilterItemsFromQuery()
+        {
+            return this.httpContextAccessor.HttpContext.Request.Query
+                .Where((keyValue) =>
+                {
+                    bool isEqualFilter = Regex.IsMatch(keyValue.Key, @"^filter\.[a-zA-Z0-9]+$", RegexOptions.IgnoreCase);
+                    bool isAdvancedEqualFilter = Regex.IsMatch(keyValue.Key, @"^filter\.[a-zA-Z0-9]+\.(eq|gt|gte|lt|lte)$", RegexOptions.IgnoreCase);
+                    return isEqualFilter || isAdvancedEqualFilter;
+                })
+                .Select(keyValue =>
+                {
+                    string[] filterSplit = keyValue.Key.Split(".");
+
+                    PaginationFilterItem paginationFilterItem = new PaginationFilterItem()
+                    {
+                        FilterType = this.ExtractFilterType(filterSplit),
+                        PropertyName = filterSplit[1],
+                        PropertyValue = keyValue.Value,
+                    };
+
+                    return paginationFilterItem;
+                });
         }
 
         private FilterType ExtractFilterType(string[] filterSplit)
