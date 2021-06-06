@@ -1,6 +1,8 @@
+using Contract.Architecture.Backend.Core.API.Contexts.Pagination;
 using Contract.Architecture.Backend.Core.API.Security.Authorization;
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,8 @@ namespace Contract.Architecture.Backend.Core.API.Modules.GegoenntesBankwesen.Geg
 
         [HttpGet]
         [Authorized]
-        public ActionResult<IEnumerable<IGegoennteBank>> GetGegoennteBanken()
+        [Pagination(FilterFields = new[] { "Name" }, SortFields = new[] { "Name" })]
+        public ActionResult<IPagedResult<IGegoennteBank>> GetGegoennteBanken()
         {
             var getGegoennteBankenResult = this.gegoennteBankenCrudLogic.GetGegoennteBanken();
             return this.FromLogicResult(getGegoennteBankenResult);

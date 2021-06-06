@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendCoreService } from 'src/app/services/backend/backend-core.service';
+import { IPagedResult } from 'src/app/services/backend/i-paged-result';
+import { IPaginationOptions, toPaginationParams } from 'src/app/services/backend/i-pagionation-options';
 import { ApiGegoennteBank } from './dtos/api/api-gegoennte-bank';
 import { ApiGegoennteBankDetail } from './dtos/api/api-gegoennte-bank-detail';
 import { GegoennteBank, IGegoennteBank } from './dtos/i-gegoennte-bank';
@@ -12,11 +14,13 @@ export class GegoennteBankenCrudService {
 
     constructor(private backendCoreService: BackendCoreService) { }
 
-    public async getGegoennteBanken(): Promise<IGegoennteBank[]> {
-        const apiGegoennteBanken = await this.backendCoreService.get<ApiGegoennteBank[]>('/api/gegoenntes-bankwesen/gegoennte-banken');
+    public async getGegoennteBanken(paginationOptions: IPaginationOptions): Promise<IPagedResult<IGegoennteBank>> {
+        const url = '/api/gegoenntes-bankwesen/gegoennte-banken?' + toPaginationParams(paginationOptions);
+        const gegoennteBankenResult = await this.backendCoreService.get<IPagedResult<ApiGegoennteBank>>(url);
 
-        const gegoennteBanken = apiGegoennteBanken.map(apiGegoennteBank => GegoennteBank.fromApiGegoennteBank(apiGegoennteBank));
-        return gegoennteBanken;
+        gegoennteBankenResult.data = gegoennteBankenResult.data
+            .map(apiGegoennteBank => GegoennteBank.fromApiGegoennteBank(apiGegoennteBank));
+        return gegoennteBankenResult;
     }
 
     public async getGegoennteBankDetail(gegoennteBankId: string): Promise<IGegoennteBankDetail> {

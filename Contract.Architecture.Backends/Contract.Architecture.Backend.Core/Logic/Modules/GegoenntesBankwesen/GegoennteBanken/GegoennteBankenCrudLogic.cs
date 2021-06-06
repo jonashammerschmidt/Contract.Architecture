@@ -1,12 +1,13 @@
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
 using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Pagination;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Tools.Pagination;
 using Contract.Architecture.Backend.Core.Logic.LogicResults;
+using Contract.Architecture.Backend.Core.Logic.Tools.Pagination;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Contract.Architecture.Backend.Core.Logic.Modules.GegoenntesBankwesen.GegoennteBanken
 {
@@ -74,13 +75,18 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.GegoenntesBankwesen.G
             return LogicResult<IGegoennteBankDetail>.Ok(GegoennteBankDetail.FromDbGegoennteBankDetail(dbGegoennteBankDetail));
         }
 
-        public ILogicResult<IEnumerable<IGegoennteBank>> GetGegoennteBanken()
+        public ILogicResult<IPagedResult<IGegoennteBank>> GetGegoennteBanken()
         {
-            IEnumerable<IGegoennteBank> gegoennteBanken = this.gegoennteBankenCrudRepository.GetGegoennteBanken()
-                .Select(dbGegoennteBank => GegoennteBank.FromDbGegoennteBank(dbGegoennteBank));
+            IDbPagedResult<IDbGegoennteBank> dbGegoennteBankenPagedResult =
+                this.gegoennteBankenCrudRepository.GetGegoennteBanken();
+
+            IPagedResult<IGegoennteBank> gegoennteBankenPagedResult =
+                PagedResult.FromDbPagedResult(
+                    dbGegoennteBankenPagedResult,
+                    (dbGegoennteBanken) => GegoennteBank.FromDbGegoennteBank(dbGegoennteBanken));
 
             this.logger.LogDebug("GegoennteBanken wurden geladen");
-            return LogicResult<IEnumerable<IGegoennteBank>>.Ok(gegoennteBanken);
+            return LogicResult<IPagedResult<IGegoennteBank>>.Ok(gegoennteBankenPagedResult);
         }
 
         public ILogicResult UpdateGegoennteBank(IGegoennteBankUpdate gegoennteBankUpdate)

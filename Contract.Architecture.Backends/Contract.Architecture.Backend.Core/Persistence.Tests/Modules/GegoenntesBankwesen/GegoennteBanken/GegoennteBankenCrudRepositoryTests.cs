@@ -1,6 +1,10 @@
+using Contract.Architecture.Backend.Core.Contract.Contexts;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Tools.Pagination;
 using Contract.Architecture.Backend.Core.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
 using System.Linq;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.GegoenntesBankwesen.GegoennteBanken
@@ -108,9 +112,11 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Gegoennte
             GegoennteBankenCrudRepository gegoennteBankenCrudRepository = this.GetGegoennteBankenCrudRepositoryDefault();
 
             // Act
-            IDbGegoennteBank[] gegoennteBanken = gegoennteBankenCrudRepository.GetGegoennteBanken().ToArray();
+            IDbPagedResult<IDbGegoennteBank> dbGegoennteBankenPagedResult =
+                gegoennteBankenCrudRepository.GetGegoennteBanken();
 
             // Assert
+            IDbGegoennteBank[] gegoennteBanken = dbGegoennteBankenPagedResult.Data.ToArray();
             Assert.AreEqual(2, gegoennteBanken.Length);
             DbGegoennteBankTest.AssertDbDefault(gegoennteBanken[0]);
             DbGegoennteBankTest.AssertDbDefault2(gegoennteBanken[1]);
@@ -145,12 +151,26 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Gegoennte
 
         private GegoennteBankenCrudRepository GetGegoennteBankenCrudRepositoryDefault()
         {
-            return new GegoennteBankenCrudRepository(InMemoryDbContext.CreatePersistenceDbContextWithDefault());
+            return new GegoennteBankenCrudRepository(
+                this.GetPaginationContext(),
+                InMemoryDbContext.CreatePersistenceDbContextWithDefault());
         }
 
         private GegoennteBankenCrudRepository GetGegoennteBankenCrudRepositoryEmpty()
         {
-            return new GegoennteBankenCrudRepository(InMemoryDbContext.CreatePersistenceDbContext());
+            return new GegoennteBankenCrudRepository(
+                this.GetPaginationContext(),
+                InMemoryDbContext.CreatePersistenceDbContext());
+        }
+
+        private IPaginationContext GetPaginationContext()
+        {
+            Mock<IPaginationContext> paginationContext = new Mock<IPaginationContext>();
+            paginationContext.Setup(context => context.Limit).Returns(20);
+            paginationContext.Setup(context => context.Offset).Returns(0);
+            paginationContext.Setup(context => context.Sort).Returns(Array.Empty<IPaginationSortItem>());
+            paginationContext.Setup(context => context.Filter).Returns(Array.Empty<IPaginationFilterItem>());
+            return paginationContext.Object;
         }
     }
 }

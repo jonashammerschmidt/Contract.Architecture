@@ -38,7 +38,8 @@ export class GegoennterKundeCreateDialog implements OnInit {
       besteBankId: new FormControl(null, [Validators.required]),
     });
 
-    this.gegoennteBanken = await this.gegoennteBankenCrudService.getGegoennteBanken();
+    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
+    this.gegoennteBanken = gegoennteBankenResult.data;
   }
 
   async onCreateClicked(): Promise<void> {

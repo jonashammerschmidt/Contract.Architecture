@@ -8,6 +8,7 @@ import { TableFilterBarDropdownItem } from 'src/app/components/ui/table-filter-b
 import { GegoennteKundenCrudService } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/gegoennte-kunden-crud.service';
 import { IGegoennterKunde } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/dtos/i-gegoennter-kunde';
 import { GegoennterKundeCreateDialog } from './dialogs/gegoennter-kunde-create/gegoennter-kunde-create.dialog';
+import { MultiDataSource } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-multi/multi-data-source';
 
 @Component({
   selector: 'app-gegoennte-kunden',
@@ -48,6 +49,8 @@ export class GegoennteKundenPage implements OnInit, AfterViewInit {
   async ngOnInit(): Promise<void> {
     await this.setupGegoennteBankenFilter();
 
+    await this.setupGegoennteBankenFilter();
+
     this.gegoennteKunden = await this.gegoennteKundenCrudService.getGegoennteKunden();
     this.updateDataSource();
   }
@@ -70,8 +73,11 @@ export class GegoennteKundenPage implements OnInit, AfterViewInit {
 
   updateDataSource(): void {
     this.gegoennteKundenTableDataSource.data = this.gegoennteKunden.slice()
-      .filter(gegoennterKunde => this.filterComparators.length < 1 || this.filterComparators.every(filterComparator => filterComparator(gegoennterKunde)))
-      .filter(gegoennterKunde => gegoennterKunde.name.toString().toLowerCase().includes(this.filterTerm.trim().toLowerCase()));
+      .filter(gegoennterKunde =>
+        this.filterComparators.length < 1 ||
+        this.filterComparators.every(filterComparator => filterComparator(gegoennterKunde)))
+      .filter(gegoennterKunde => gegoennterKunde.name.toString().toLowerCase()
+        .includes(this.filterTerm.trim().toLowerCase()));
   }
 
   openCreateDialog(): void {
@@ -86,11 +92,24 @@ export class GegoennteKundenPage implements OnInit, AfterViewInit {
   }
 
   private async setupGegoennteBankenFilter(): Promise<void> {
-    this.gegoennteBanken = await this.gegoennteBankenCrudService.getGegoennteBanken();
+    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
+    this.gegoennteBanken = gegoennteBankenResult.data;
 
     this.filterItems.push({
       dataName: 'Beste Bank',
-      dataSource: this.gegoennteBanken,
+      dataSource: new MultiDataSource(
+        (pageSize: number, pageIndex: number, filterTerm: string) => {
+          return this.gegoennteBankenCrudService.getGegoennteBanken({
+            limit: pageSize,
+            offset: pageSize * pageIndex,
+            filters: [
+              {
+                filterField: 'name',
+                containsFilters: [filterTerm]
+              }
+            ]
+          });
+        }),
       valueExpr: 'id',
       displayExpr: 'name',
     });

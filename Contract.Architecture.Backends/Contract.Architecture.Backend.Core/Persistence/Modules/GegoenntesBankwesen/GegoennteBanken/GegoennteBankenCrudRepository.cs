@@ -1,17 +1,23 @@
+using Contract.Architecture.Backend.Core.Contract.Contexts;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Contract.Persistence.Tools.Pagination;
+using Contract.Architecture.Backend.Core.Persistence.Tools.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken
 {
     internal class GegoennteBankenCrudRepository : IGegoennteBankenCrudRepository
     {
+        private readonly IPaginationContext paginationContext;
         private readonly PersistenceDbContext dbContext;
 
-        public GegoennteBankenCrudRepository(PersistenceDbContext dbContext)
+        public GegoennteBankenCrudRepository(
+            IPaginationContext paginationContext,
+            PersistenceDbContext dbContext)
         {
+            this.paginationContext = paginationContext;
             this.dbContext = dbContext;
         }
 
@@ -55,10 +61,14 @@ namespace Contract.Architecture.Backend.Core.Persistence.Modules.GegoenntesBankw
             return DbGegoennteBankDetail.FromEfGegoennteBank(efGegoennteBank);
         }
 
-        public IEnumerable<IDbGegoennteBank> GetGegoennteBanken()
+        public IDbPagedResult<IDbGegoennteBank> GetGegoennteBanken()
         {
-            return this.dbContext.GegoennteBanken
-                .Select(efGegoennteBank => DbGegoennteBank.FromEfGegoennteBank(efGegoennteBank));
+            var efGegoennteBanken = this.dbContext.GegoennteBanken;
+
+            return Pagination.Filter(
+                efGegoennteBanken,
+                this.paginationContext,
+                efGegoennteBank => DbGegoennteBank.FromEfGegoennteBank(efGegoennteBank));
         }
 
         public void UpdateGegoennteBank(IDbGegoennteBank dbGegoennteBank)

@@ -1,5 +1,5 @@
+using Contract.Architecture.Backend.Core.Contract.Persistence.Tools.Pagination;
 using System;
-using System.Collections.Generic;
 
 namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken
 {
@@ -15,7 +15,7 @@ namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Gegoen
 
         IDbGegoennteBankDetail GetGegoennteBankDetail(Guid gegoennteBankId);
 
-        IEnumerable<IDbGegoennteBank> GetGegoennteBanken();
+        IDbPagedResult<IDbGegoennteBank> GetGegoennteBanken();
 
         void UpdateGegoennteBank(IDbGegoennteBank gegoennteBank);
     }

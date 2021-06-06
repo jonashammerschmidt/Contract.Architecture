@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { TableFilterBarDropdownItem } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-item';
-import { GegoennteBankenCrudService } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/gegoennte-banken-crud.service';
+import { TableFilterBarComponent } from 'src/app/components/ui/table-filter-bar/table-filter-bar.component';
 import { IGegoennteBank } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/dtos/i-gegoennte-bank';
+import { GegoennteBankenCrudService } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/gegoennte-banken-crud.service';
+import { PaginationDataSource } from 'src/app/services/backend/pagination.data-source';
 import { GegoennteBankCreateDialog } from './dialogs/gegoennte-bank-create/gegoennte-bank-create.dialog';
 
 @Component({
@@ -12,16 +14,17 @@ import { GegoennteBankCreateDialog } from './dialogs/gegoennte-bank-create/gegoe
   templateUrl: './gegoennte-banken.page.html',
   styleUrls: ['./gegoennte-banken.page.scss']
 })
-export class GegoennteBankenPage implements OnInit, AfterViewInit {
+export class GegoennteBankenPage implements AfterViewInit {
 
+  // FilterBar
+  @ViewChild(TableFilterBarComponent) tableFilterBarComponent: TableFilterBarComponent;
   filterItems: TableFilterBarDropdownItem[] = [];
-
-  filterComparators: ((value: any) => boolean)[] = [];
   filterValues: any[][] = [];
-  filterTerm = '';
 
-  gegoennteBanken: IGegoennteBank[];
-  public gegoennteBankenTableDataSource = new MatTableDataSource<IGegoennteBank>([]);
+  // Table
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  public gegoennteBankenDataSource: PaginationDataSource<IGegoennteBank>;
   public gegoennteBankenGridColumns: string[] = [
     'name',
     'gegoennterName',
@@ -33,37 +36,22 @@ export class GegoennteBankenPage implements OnInit, AfterViewInit {
     'detail',
   ];
 
-  @ViewChild(MatSort) sort: MatSort;
-
   constructor(
     private gegoennteBankenCrudService: GegoennteBankenCrudService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog) {
 
-  async ngOnInit(): Promise<void> {
-    this.gegoennteBanken = await this.gegoennteBankenCrudService.getGegoennteBanken();
-    this.updateDataSource();
+    this.gegoennteBankenDataSource = new PaginationDataSource<IGegoennteBank>(
+      (options) => this.gegoennteBankenCrudService.getGegoennteBanken(options),
+      () => [
+        {
+          filterField: 'name',
+          containsFilters: [this.tableFilterBarComponent.currentFilterTerm]
+        },
+      ]);
   }
 
   ngAfterViewInit(): void {
-    if (this.sort) {
-      this.gegoennteBankenTableDataSource.sort = this.sort;
-    }
-  }
-
-  onFilterValuesChange(values: any[][]): void {
-    this.filterValues = values;
-    this.updateDataSource();
-  }
-
-  onFilterTermChange(filterTerm: string): void {
-    this.filterTerm = filterTerm;
-    this.updateDataSource();
-  }
-
-  updateDataSource(): void {
-    this.gegoennteBankenTableDataSource.data = this.gegoennteBanken.slice()
-      .filter(gegoennteBank => this.filterComparators.length < 1 || this.filterComparators.every(filterComparator => filterComparator(gegoennteBank)))
-      .filter(gegoennteBank => gegoennteBank.name.toString().toLowerCase().includes(this.filterTerm.trim().toLowerCase()));
+    this.gegoennteBankenDataSource.initialize(this.tableFilterBarComponent, this.paginator, this.sort);
   }
 
   openCreateDialog(): void {

@@ -43,7 +43,8 @@ export class GegoennterKundeUpdateDialog implements OnInit {
 
     this.gegoennterKundeUpdateForm.patchValue(GegoennterKundeUpdate.fromGegoennterKundeDetail(gegoennterKundeDetail));
 
-    this.gegoennteBanken = await this.gegoennteBankenCrudService.getGegoennteBanken();
+    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
+    this.gegoennteBanken = gegoennteBankenResult.data;
   }
 
   async onUpdateClicked(): Promise<void> {

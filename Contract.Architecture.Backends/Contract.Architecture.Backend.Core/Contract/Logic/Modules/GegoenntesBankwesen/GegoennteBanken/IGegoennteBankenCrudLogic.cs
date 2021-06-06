@@ -1,6 +1,6 @@
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Pagination;
 using System;
-using System.Collections.Generic;
 
 namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBankwesen.GegoennteBanken
 {
@@ -12,7 +12,7 @@ namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBa
 
         ILogicResult<IGegoennteBankDetail> GetGegoennteBankDetail(Guid gegoennteBankId);
 
-        ILogicResult<IEnumerable<IGegoennteBank>> GetGegoennteBanken();
+        ILogicResult<IPagedResult<IGegoennteBank>> GetGegoennteBanken();
 
         ILogicResult UpdateGegoennteBank(IGegoennteBankUpdate gegoennteBankUpdate);
     }

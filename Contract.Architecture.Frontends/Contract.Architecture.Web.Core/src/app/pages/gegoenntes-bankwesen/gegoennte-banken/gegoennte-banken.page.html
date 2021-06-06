@@ -8,30 +8,28 @@
         </button>
     </div>
 
-    <app-table-filter-bar [filterItems]="filterItems" [filterItemsValues]="filterValues"
-        (filterItemsValuesChange)="onFilterValuesChange($event)" (filterTermChange)="onFilterTermChange($event)">
+    <app-table-filter-bar [filterItems]="filterItems" [filterItemsValues]="filterValues">
     </app-table-filter-bar>
 
     <br>
 
     <div class="table-container">
-        <table mat-table [dataSource]="gegoennteBankenTableDataSource" matSort matSortActive="name"
-            matSortDirection="asc">
+        <table mat-table [dataSource]="gegoennteBankenDataSource" matSort>
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let element" > {{element.name}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="gegoennterName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönnter Name </th>
-                <td mat-cell *matCellDef="let element" > {{element.gegoennterName}} </td>
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="gegoennterBoolean">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönnter Boolean </th>
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Boolean </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon color="accent" *ngIf="element.gegoennterBoolean" >
+                    <mat-icon color="accent" *ngIf="element.gegoennterBoolean">
                         check_box
                     </mat-icon>
                     <mat-icon style="color: gray" *ngIf="!element.gegoennterBoolean">
@@ -41,23 +39,23 @@
             </ng-container>
 
             <ng-container matColumnDef="gegoenntesDateTime">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönntes Date Time </th>
-                <td mat-cell *matCellDef="let element"> {{element.gegoenntesDateTime | date:'dd. MMM. yyyy, HH:mm'}} </td>
+                <th mat-header-cell *matHeaderCellDef> Gegönntes Date Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoenntesDateTime | date:'dd. MMM. yyyy, HH:mm'}}</td>
             </ng-container>
 
             <ng-container matColumnDef="gegoennterDouble">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönnter Double </th>
-                <td mat-cell *matCellDef="let element" > {{element.gegoennterDouble}} </td>
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Double </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterDouble}} </td>
             </ng-container>
 
             <ng-container matColumnDef="gegoennteGuid">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönnte Guid </th>
-                <td mat-cell *matCellDef="let element" > {{element.gegoennteGuid}} </td>
+                <th mat-header-cell *matHeaderCellDef> Gegönnte Guid </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennteGuid}} </td>
             </ng-container>
 
             <ng-container matColumnDef="gegoennterInteger">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Gegönnter Integer </th>
-                <td mat-cell *matCellDef="let element" > {{element.gegoennterInteger}} </td>
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Integer </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterInteger}} </td>
             </ng-container>
 
             <ng-container matColumnDef="detail">
@@ -71,7 +69,12 @@
             <tr mat-row *matRowDef="let row; columns: gegoennteBankenGridColumns;"
                 [routerLink]="['/gegoenntes-bankwesen/gegoennte-banken/detail', row.id]"></tr>
         </table>
-        <div *ngIf="!gegoennteBanken" class="loading">
+
+        <mat-paginator [length]="gegoennteBankenDataSource.totalCount$ | async" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20, 50]">
+        </mat-paginator>
+
+        <div *ngIf="gegoennteBankenDataSource.loading$ | async" class="loading">
             <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
         </div>
     </div>

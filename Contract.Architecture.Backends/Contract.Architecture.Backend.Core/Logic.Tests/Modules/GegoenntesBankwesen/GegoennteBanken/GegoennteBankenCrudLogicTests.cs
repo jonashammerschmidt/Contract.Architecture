@@ -1,8 +1,10 @@
 using Contract.Architecture.Backend.Core.Contract.Logic.LogicResults;
 using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
 using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Identifier;
+using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Pagination;
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
 using Contract.Architecture.Backend.Core.Logic.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Logic.Tests.Tools.Pagination;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -148,11 +150,11 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoenntesBankw
                 logger);
 
             // Act
-            ILogicResult<IEnumerable<IGegoennteBank>> result = gegoennteBankenCrudLogic.GetGegoennteBanken();
+            ILogicResult<IPagedResult<IGegoennteBank>> result = gegoennteBankenCrudLogic.GetGegoennteBanken();
 
             // Assert
             Assert.AreEqual(LogicResultState.Ok, result.State);
-            IGegoennteBank[] gegoennteBankResults = result.Data.ToArray();
+            IGegoennteBank[] gegoennteBankResults = result.Data.Data.ToArray();
             Assert.AreEqual(2, gegoennteBankResults.Length);
             GegoennteBankTest.AssertDefault(gegoennteBankResults[0]);
             GegoennteBankTest.AssertDefault2(gegoennteBankResults[1]);
@@ -207,7 +209,14 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoenntesBankw
             gegoennteBankenCrudRepository.Setup(repository => repository.GetGegoennteBank(GegoennteBankTestValues.IdDefault2)).Returns(DbGegoennteBankTest.Default2());
             gegoennteBankenCrudRepository.Setup(repository => repository.GetGegoennteBankDetail(GegoennteBankTestValues.IdDefault)).Returns(DbGegoennteBankDetailTest.Default());
             gegoennteBankenCrudRepository.Setup(repository => repository.GetGegoennteBankDetail(GegoennteBankTestValues.IdDefault2)).Returns(DbGegoennteBankDetailTest.Default2());
-            gegoennteBankenCrudRepository.Setup(repository => repository.GetGegoennteBanken()).Returns(new List<IDbGegoennteBank> { DbGegoennteBankTest.Default(), DbGegoennteBankTest.Default2() });
+            gegoennteBankenCrudRepository.Setup(repository => repository.GetGegoennteBanken()).Returns(new DbPagedResult<IDbGegoennteBank>()
+            {
+                Data = new List<IDbGegoennteBank>() { DbGegoennteBankTest.Default(), DbGegoennteBankTest.Default2() },
+                TotalCount = 2,
+                Count = 2,
+                Limit = 20,
+                Offset = 0
+            });
             gegoennteBankenCrudRepository.Setup(repository => repository.UpdateGegoennteBank(It.IsAny<IDbGegoennteBank>())).Callback((IDbGegoennteBank dbGegoennteBank) =>
             {
                 DbGegoennteBankTest.AssertUpdated(dbGegoennteBank);
