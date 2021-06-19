@@ -1,0 +1,104 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Gegönnte Bank erstellen
+    </h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="gegoennte-bank-create-dialog" *ngIf="gegoennteBankCreateForm">
+        <form [formGroup]="gegoennteBankCreateForm">
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required="true" maxlength="256" placeholder="Name">
+                <mat-hint [align]="'end'">{{gegoennteBankCreateForm.controls.name.value.length}} / 256</mat-hint>
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.name.touched && gegoennteBankCreateForm.controls.name.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Name</mat-label>
+                <input matInput formControlName="gegoennterName" required="true" maxlength="256" placeholder="Gegönnter Name">
+                <mat-hint [align]="'end'">{{gegoennteBankCreateForm.controls.gegoennterName.value.length}} / 256</mat-hint>
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.gegoennterName.touched && gegoennteBankCreateForm.controls.gegoennterName.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterName.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterName.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-checkbox formControlName="gegoennterBoolean">
+                Gegönnter Boolean
+            </mat-checkbox>
+
+            <br>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönntes Date Time</mat-label>
+                <input matInput formControlName="gegoenntesDateTime" required="true" placeholder="Gegönntes Date Time" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.gegoenntesDateTime.touched && gegoennteBankCreateForm.controls.gegoenntesDateTime.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoenntesDateTime.errors.required">Dieses Feld ist erfolderlich.</span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoenntesDateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Double</mat-label>
+                <input matInput formControlName="gegoennterDouble" type="number" required="true" placeholder="Gegönnter Double">
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.gegoennterDouble.touched && gegoennteBankCreateForm.controls.gegoennterDouble.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterDouble.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterDouble.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnte Guid</mat-label>
+                <input matInput formControlName="gegoennteGuid" required="true" placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.gegoennteGuid.touched && gegoennteBankCreateForm.controls.gegoennteGuid.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennteGuid.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennteGuid.errors.pattern">
+                        Dieses Feld ist ungültig. Beispiel: 00000000-0000-0000-0000-000000000000.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gegönnter Integer</mat-label>
+                <input matInput formControlName="gegoennterInteger" type="number" required="true" placeholder="Gegönnter Integer">
+                <mat-error *ngIf="gegoennteBankCreateForm.controls.gegoennterInteger.touched && gegoennteBankCreateForm.controls.gegoennterInteger.invalid">
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterInteger.errors.required">
+                        Dieses Feld ist erfolderlich.
+                    </span>
+                    <span *ngIf="gegoennteBankCreateForm.controls.gegoennterInteger.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onCreateClicked()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Erstellen
+        </button>
+
+        <button mat-flat-button mat-dialog-close>
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

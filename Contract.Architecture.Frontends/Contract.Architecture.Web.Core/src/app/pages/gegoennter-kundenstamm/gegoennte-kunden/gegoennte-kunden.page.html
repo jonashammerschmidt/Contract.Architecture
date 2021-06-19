@@ -1,0 +1,86 @@
+<div class="gegoennte-kunden-page">
+
+    <div class="toolbar">
+        <h1>Gegönnte Kunden</h1>
+        <button mat-flat-button color="primary" (click)="openCreateDialog()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Gegönnter Kunde erstellen
+        </button>
+    </div>
+
+    <app-table-filter-bar [filterItems]="filterItems" [filterItemsValues]="filterValues">
+    </app-table-filter-bar>
+
+    <br>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="gegoennteKundenDataSource" matSort>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterName">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterBoolean">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Boolean </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-icon color="accent" *ngIf="element.gegoennterBoolean" >
+                        check_box
+                    </mat-icon>
+                    <mat-icon style="color: gray" *ngIf="!element.gegoennterBoolean">
+                        check_box_outline_blank
+                    </mat-icon>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterDateTime">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Date Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterDateTime | date:'dd. MMM. yyyy, HH:mm'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterDouble">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Double </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterDouble}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterGuid">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Guid </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterGuid}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gegoennterInteger">
+                <th mat-header-cell *matHeaderCellDef> Gegönnter Integer </th>
+                <td mat-cell *matCellDef="let element"> {{element.gegoennterInteger}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="besteBank">
+                <th mat-header-cell *matHeaderCellDef> Beste Bank </th>
+                <td mat-cell *matCellDef="let element"> {{getGegoennteBankName(element.besteBankId)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="detail">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" width="10%">
+                    <button mat-button role="link">Detail</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="gegoennteKundenGridColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: gegoennteKundenGridColumns;"
+                [routerLink]="['/gegoennter-kundenstamm/gegoennte-kunden/detail', row.id]"></tr>
+        </table>
+        
+        <mat-paginator [length]="gegoennteKundenDataSource.totalCount$ | async" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20, 50]">
+        </mat-paginator>
+
+        <div *ngIf="gegoennteKundenDataSource.loading$ | async" class="loading">
+            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+        </div>
+    </div>
+</div>

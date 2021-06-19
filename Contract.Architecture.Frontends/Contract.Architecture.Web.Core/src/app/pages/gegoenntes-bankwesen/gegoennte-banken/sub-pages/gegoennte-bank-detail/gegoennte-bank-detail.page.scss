@@ -1,0 +1,54 @@
+.gegoennte-bank-detail-page {
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content min-content min-content;
+        grid-gap: 8px;
+        align-items: center;
+
+        h1 {
+            font-size: 1.2em;
+        }
+
+        .save-button {
+            height: min-content;
+        }
+    }
+
+    a mat-icon {
+        transform: translateY(2px);
+    }
+
+    mat-tab-group {
+        width: calc(var(--content-width) - 20px);
+        height: calc(var(--content-height) - 55px);
+
+        ::ng-deep mat-tab-body {
+            height: calc(var(--content-height) - 103px);
+        }
+    }
+        
+    .table-container {
+        height: calc(100% - 100px);
+        overflow: auto;
+    
+        table {
+            width: 100%;
+        }
+    
+        .mat-row {
+            transition: background-color 0.1s ease-in-out;
+    
+            &:hover {
+                background-color: #ebebeb;
+            }
+        }
+    }
+}
+
+.loading {
+    width: calc(var(--content-width));
+    height: calc(var(--content-height));
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,4 +1,6 @@
-﻿using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
+using Contract.Architecture.Backend.Core.Persistence.Modules.GegoennterKundenstamm.GegoennteKunden;
+using Contract.Architecture.Backend.Core.Persistence.Modules.GegoenntesBankwesen.GegoennteBanken;
+using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,10 @@ namespace Contract.Architecture.Backend.Core.Persistence
         public virtual DbSet<EfEmailUserPasswordResetToken> EmailUserPasswordResetTokens { get; set; }
 
         public virtual DbSet<EfSession> Sessions { get; set; }
+
+        public virtual DbSet<EfGegoennteBank> GegoennteBanken { get; set; }
+
+        public virtual DbSet<EfGegoennterKunde> GegoennteKunden { get; set; }
 
         public static PersistenceDbContext CustomInstantiate(DbContextOptions<PersistenceDbContext> options)
         {
@@ -93,6 +99,45 @@ namespace Contract.Architecture.Backend.Core.Persistence
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<EfGegoennteBank>(entity =>
+            {
+                entity.ToTable("GegoennteBanken");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.GegoennterName)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.GegoenntesDateTime).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<EfGegoennterKunde>(entity =>
+            {
+                entity.ToTable("GegoennteKunden");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.GegoennterName)
+                    .IsRequired()
+                    .HasMaxLength(256);
+
+                entity.Property(e => e.GegoennterDateTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.BesteBank)
+                    .WithMany(p => p.BesteKunden)
+                    .HasForeignKey(d => d.BesteBankId)
+                    .HasConstraintName("FK_GegoennteKunden_BesteBankId");
             });
 
             this.OnModelCreatingPartial(modelBuilder);
