@@ -23,3 +23,10 @@ mat-select {
     width: fit-content;
     min-width: 30px;
 }
+
+.loading-item {
+    margin: 8px;
+    justify-content: center;
+    display: grid;
+    overflow: hidden;
+}

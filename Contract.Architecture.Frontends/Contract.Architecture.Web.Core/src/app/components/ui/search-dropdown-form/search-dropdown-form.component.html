@@ -6,9 +6,13 @@
             <ngx-mat-select-search [formControl]="filterCtrl"></ngx-mat-select-search>
         </mat-option>
 
-        <mat-option *ngFor="let dataSourceItem of filteredDataSource | async" [value]="getId(dataSourceItem)">
-            {{getDisplayname(dataSourceItem)}}
+        <mat-option *ngFor="let item of data" [value]="getId(item)">
+            {{getDisplayname(item)}}
         </mat-option>
+
+        <div class="loading-item" *ngIf="dataSource.loading">
+            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+        </div>
     </mat-select>
     <mat-error
         *ngIf="formGroupInstance.controls[formControlNameInstance].touched && formGroupInstance.controls[formControlNameInstance].invalid">

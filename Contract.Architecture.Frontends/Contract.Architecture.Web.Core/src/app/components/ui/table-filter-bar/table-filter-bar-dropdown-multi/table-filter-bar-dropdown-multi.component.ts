@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinct, tap } from 'rxjs/operators';
 import { distinctByField } from 'src/app/helpers/distinct';
 import { MultiDataSource } from './multi-data-source';
@@ -44,20 +44,18 @@ export class TableFilterBarDropdownMultiComponent<T> implements AfterViewInit, O
 
   @Input() label: string;
 
-  // ----------- TAKEN FROM EXAMPLE -----------
-
-  /** control for the MatSelect filter keyword */
   public filterCtrl: FormControl = new FormControl();
 
-  /** Subject that emits when the component has been destroyed. */
   protected onDestroy = new Subject<void>();
 
   @ViewChild('select') matSelect: MatSelect;
+  scrollElement: any;
 
   dataSubscription: Subscription;
   filterSubscription: Subscription;
 
-  constructor() { }
+  constructor() {
+  }
 
   getDisplayname(value: T): string {
     if (this.displayExpr) {
@@ -77,8 +75,6 @@ export class TableFilterBarDropdownMultiComponent<T> implements AfterViewInit, O
     }
   }
 
-  // ----------- TAKEN FROM EXAMPLE -----------
-
   updateDataSource(): void {
     if (this.dataSubscription) {
       this.dataSubscription.unsubscribe();
@@ -92,8 +88,17 @@ export class TableFilterBarDropdownMultiComponent<T> implements AfterViewInit, O
 
     if (this.dataSource && this.values && this.valueExpr) {
       this.dataSubscription = this.dataSource.data$.subscribe((data: T[]) => {
-        this.data = distinctByField(this.selectedDataItems.concat(data), 'id');
+        const scrollTop = this.scrollElement?.scrollTop;
+        this.data = distinctByField(this.selectedDataItems.concat(data), this.valueExpr);
         this.selectedDataItems = this.values.map(value => this.data.find(dataItem => dataItem[this.valueExpr] === value));
+
+        if (scrollTop) {
+          setTimeout(() => {
+            setTimeout(() => {
+              this.scrollElement.scrollTop = scrollTop;
+            }, 0);
+          }, 0);
+        }
       });
 
       // listen for search field value changes
@@ -104,7 +109,6 @@ export class TableFilterBarDropdownMultiComponent<T> implements AfterViewInit, O
         )
         .subscribe(value => this.dataSource.filter(value));
     }
-
   }
 
   ngAfterViewInit(): void {
@@ -112,9 +116,8 @@ export class TableFilterBarDropdownMultiComponent<T> implements AfterViewInit, O
       .pipe(distinct())
       .subscribe((isOpen) => {
         if (isOpen) {
-          const panel = this.matSelect.panel.nativeElement;
-          panel.addEventListener('scroll', event => {
-            console.log('scroll', this.dataSource.loading);
+          this.scrollElement = this.matSelect.panel.nativeElement;
+          this.scrollElement.addEventListener('scroll', event => {
             if (!this.dataSource.loading && event.target.scrollTop > event.target.scrollHeight - event.target.clientHeight - 48) {
               this.dataSource.loadNext();
             }

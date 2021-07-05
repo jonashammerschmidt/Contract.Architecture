@@ -9,5 +9,9 @@
         <mat-option *ngFor="let dataItem of data" [value]="dataItem">
             {{getDisplayname(dataItem)}}
         </mat-option>
+
+        <div class="loading-item" *ngIf="dataSource.loading">
+            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+        </div>
     </mat-select>
 </div>
