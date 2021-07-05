@@ -25,7 +25,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.GegoennterKundenstamm
 
         public IGegoennteBank BesteBank { get; set; }
 
-        internal static GegoennterKundeDetail FromDbGegoennterKundeDetail(IDbGegoennterKundeDetail dbGegoennterKundeDetail)
+        internal static IGegoennterKundeDetail FromDbGegoennterKundeDetail(IDbGegoennterKundeDetail dbGegoennterKundeDetail)
         {
             return new GegoennterKundeDetail()
             {

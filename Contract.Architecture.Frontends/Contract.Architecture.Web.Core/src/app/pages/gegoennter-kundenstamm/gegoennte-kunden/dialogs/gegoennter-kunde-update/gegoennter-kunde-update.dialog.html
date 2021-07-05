@@ -19,21 +19,28 @@
                 <mat-hint *ngIf="gegoennterKundeUpdateForm.controls.name.value" [align]="'end'">
                     {{gegoennterKundeUpdateForm.controls.name.value.length}} / 256
                 </mat-hint>
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.name.touched && gegoennterKundeUpdateForm.controls.name.invalid">
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.name.errors.required">Dieses Feld ist erfolderlich.</span>
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.name.errors.pattern">Dieses Feld ist ungültig.</span>
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.name.touched && gegoennterKundeUpdateForm.controls.name.invalid">
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.name.errors.required">Dieses Feld ist
+                        erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.name.errors.pattern">Dieses Feld ist
+                        ungültig.</span>
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Gegönnter Name</mat-label>
-                <input matInput formControlName="gegoennterName" required="true" maxlength="256" placeholder="Gegönnter Name">
+                <input matInput formControlName="gegoennterName" required="true" maxlength="256"
+                    placeholder="Gegönnter Name">
                 <mat-hint *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.value" [align]="'end'">
                     {{gegoennterKundeUpdateForm.controls.gegoennterName.value.length}} / 256
                 </mat-hint>
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.touched && gegoennterKundeUpdateForm.controls.gegoennterName.invalid">
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.errors.required">Dieses Feld ist erfolderlich.</span>
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.errors.pattern">Dieses Feld ist ungültig.</span>
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.touched && gegoennterKundeUpdateForm.controls.gegoennterName.invalid">
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.errors.required">Dieses Feld ist
+                        erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterName.errors.pattern">Dieses Feld ist
+                        ungültig.</span>
                 </mat-error>
             </mat-form-field>
 
@@ -45,19 +52,24 @@
 
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Gegönnter Date Time</mat-label>
-                <input matInput formControlName="gegoennterDateTime"  placeholder="Gegönnter Date Time" [matDatepicker]="picker">
+                <input matInput formControlName="gegoennterDateTime" placeholder="Gegönnter Date Time"
+                    [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.touched && gegoennterKundeUpdateForm.controls.gegoennterDateTime.invalid">
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.errors.required">Dieses Feld ist erfolderlich.</span>
-                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.errors.pattern">Dieses Feld ist ungültig.</span>
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.touched && gegoennterKundeUpdateForm.controls.gegoennterDateTime.invalid">
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.errors.required">Dieses Feld ist
+                        erfolderlich.</span>
+                    <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDateTime.errors.pattern">Dieses Feld ist
+                        ungültig.</span>
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Gegönnter Double</mat-label>
-                <input matInput formControlName="gegoennterDouble" type="number"  placeholder="Gegönnter Double">
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDouble.touched && gegoennterKundeUpdateForm.controls.gegoennterDouble.invalid">
+                <input matInput formControlName="gegoennterDouble" type="number" placeholder="Gegönnter Double">
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDouble.touched && gegoennterKundeUpdateForm.controls.gegoennterDouble.invalid">
                     <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterDouble.errors.required">
                         Dieses Feld ist erfolderlich.
                     </span>
@@ -69,8 +81,10 @@
 
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Gegönnter Guid</mat-label>
-                <input matInput formControlName="gegoennterGuid"  placeholder="z.B. 00000000-0000-0000-0000-000000000000">
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.gegoennterGuid.touched && gegoennterKundeUpdateForm.controls.gegoennterGuid.invalid">
+                <input matInput formControlName="gegoennterGuid"
+                    placeholder="z.B. 00000000-0000-0000-0000-000000000000">
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.gegoennterGuid.touched && gegoennterKundeUpdateForm.controls.gegoennterGuid.invalid">
                     <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterGuid.errors.required">
                         Dieses Feld ist erfolderlich.
                     </span>
@@ -82,8 +96,9 @@
 
             <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Gegönnter Integer</mat-label>
-                <input matInput formControlName="gegoennterInteger" type="number"  placeholder="Gegönnter Integer">
-                <mat-error *ngIf="gegoennterKundeUpdateForm.controls.gegoennterInteger.touched && gegoennterKundeUpdateForm.controls.gegoennterInteger.invalid">
+                <input matInput formControlName="gegoennterInteger" type="number" placeholder="Gegönnter Integer">
+                <mat-error
+                    *ngIf="gegoennterKundeUpdateForm.controls.gegoennterInteger.touched && gegoennterKundeUpdateForm.controls.gegoennterInteger.invalid">
                     <span *ngIf="gegoennterKundeUpdateForm.controls.gegoennterInteger.errors.required">
                         Dieses Feld ist erfolderlich.
                     </span>
@@ -93,8 +108,10 @@
                 </mat-error>
             </mat-form-field>
 
-            <app-search-dropdown-form [formGroupInstance]="gegoennterKundeUpdateForm" [formControlNameInstance]="'besteBankId'"
-                label="Beste Bank" idExpr="id" displayExpr="name" required="true" [dataSource]="gegoennteBanken"></app-search-dropdown-form>
+            <app-search-dropdown-form [formGroupInstance]="gegoennterKundeUpdateForm"
+                [formControlNameInstance]="'besteBankId'" label="Beste Bank" idExpr="id" displayExpr="name"
+                required="true" [dataSource]="gegoennteBankenDataSource" [initialItem]="selectedBesteBank">
+            </app-search-dropdown-form>
 
         </form>
     </div>

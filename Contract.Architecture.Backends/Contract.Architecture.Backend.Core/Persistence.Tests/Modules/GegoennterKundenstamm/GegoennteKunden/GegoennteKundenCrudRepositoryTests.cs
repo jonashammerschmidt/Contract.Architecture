@@ -127,14 +127,14 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Gegoennte
             GegoennteKundenCrudRepository gegoennteKundenCrudRepository = this.GetGegoennteKundenCrudRepositoryDefault();
 
             // Act
-            IDbPagedResult<IDbGegoennterKunde> dbGegoennteKundenPagedResult =
-                gegoennteKundenCrudRepository.GetGegoennteKunden();
+            IDbPagedResult<IDbGegoennterKundeListItem> dbGegoennteKundenListItemPagedResult =
+                gegoennteKundenCrudRepository.GetPagedGegoennteKunden();
 
             // Assert
-            IDbGegoennterKunde[] dbGegoennteKunden = dbGegoennteKundenPagedResult.Data.ToArray();
-            Assert.AreEqual(2, dbGegoennteKunden.Length);
-            DbGegoennterKundeTest.AssertDbDefault(dbGegoennteKunden[0]);
-            DbGegoennterKundeTest.AssertDbDefault2(dbGegoennteKunden[1]);
+            IDbGegoennterKundeListItem[] dbGegoennteKundenListItem = dbGegoennteKundenListItemPagedResult.Data.ToArray();
+            Assert.AreEqual(2, dbGegoennteKundenListItem.Length);
+            DbGegoennterKundeListItemTest.AssertDbDefault(dbGegoennteKundenListItem[0]);
+            DbGegoennterKundeListItemTest.AssertDbDefault2(dbGegoennteKundenListItem[1]);
         }
 
         [TestMethod]

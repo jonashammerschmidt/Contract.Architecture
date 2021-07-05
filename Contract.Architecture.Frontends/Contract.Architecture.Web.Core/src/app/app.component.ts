@@ -18,7 +18,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   loading = true;
 
   menu: MenuItem[] = [
-    { name: 'Home', url: '/home' }
+    { name: 'Home', url: '/home' },
+    { name: 'Banken', url: 'gegoenntes-bankwesen/gegoennte-banken'},
+    { name: 'Kunden', url: 'gegoennter-kundenstamm/gegoennte-kunden'},
   ];
 
   @ViewChild('content') content: ElementRef;

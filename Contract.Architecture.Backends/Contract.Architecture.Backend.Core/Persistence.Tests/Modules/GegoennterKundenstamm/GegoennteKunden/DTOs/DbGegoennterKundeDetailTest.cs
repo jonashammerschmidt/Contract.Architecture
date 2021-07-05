@@ -38,5 +38,18 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests.Modules.Gegoennte
             Assert.AreEqual(GegoennterKundeTestValues.GegoennterIntegerDbDefault, dbGegoennterKundeDetail.GegoennterInteger);
             DbGegoennteBankTest.AssertDbDefault(dbGegoennterKundeDetail.BesteBank);
         }
+
+        public static void AssertDbDefault2(IDbGegoennterKundeDetail dbGegoennterKundeDetail)
+        {
+            Assert.AreEqual(GegoennterKundeTestValues.IdDbDefault2, dbGegoennterKundeDetail.Id);
+            Assert.AreEqual(GegoennterKundeTestValues.NameDbDefault2, dbGegoennterKundeDetail.Name);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterNameDbDefault2, dbGegoennterKundeDetail.GegoennterName);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterBooleanDbDefault2, dbGegoennterKundeDetail.GegoennterBoolean);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDateTimeDbDefault2, dbGegoennterKundeDetail.GegoennterDateTime);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDoubleDbDefault2, dbGegoennterKundeDetail.GegoennterDouble);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterGuidDbDefault2, dbGegoennterKundeDetail.GegoennterGuid);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterIntegerDbDefault2, dbGegoennterKundeDetail.GegoennterInteger);
+            DbGegoennteBankTest.AssertDbDefault2(dbGegoennterKundeDetail.BesteBank);
+        }
     }
 }

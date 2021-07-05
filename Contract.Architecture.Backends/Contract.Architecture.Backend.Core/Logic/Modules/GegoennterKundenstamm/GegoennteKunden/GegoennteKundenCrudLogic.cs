@@ -85,18 +85,19 @@ namespace Contract.Architecture.Backend.Core.Logic.Modules.GegoennterKundenstamm
             return LogicResult<IGegoennterKundeDetail>.Ok(GegoennterKundeDetail.FromDbGegoennterKundeDetail(dbGegoennterKundeDetail));
         }
 
-        public ILogicResult<IPagedResult<IGegoennterKunde>> GetGegoennteKunden()
+        public ILogicResult<IPagedResult<IGegoennterKundeListItem>> GetPagedGegoennteKunden()
         {
-            IDbPagedResult<IDbGegoennterKunde> dbGegoennteKundenPagedResult = 
-                this.gegoennteKundenCrudRepository.GetGegoennteKunden();
-            
-            IPagedResult<IGegoennterKunde> gegoennteKundenPagedResult =
+            IDbPagedResult<IDbGegoennterKundeListItem> dbGegoennteKundenListItemPagedResult =
+                this.gegoennteKundenCrudRepository.GetPagedGegoennteKunden();
+
+            IPagedResult<IGegoennterKundeListItem> gegoennteKundenListItemPagedResult =
                 PagedResult.FromDbPagedResult(
-                    dbGegoennteKundenPagedResult,
-                    (dbGegoennterKunde) => GegoennterKunde.FromDbGegoennterKunde(dbGegoennterKunde));
+                    dbGegoennteKundenListItemPagedResult,
+                    (dbGegoennterKundeListItem) => GegoennterKundeListItem
+                        .FromDbGegoennterKundeListItem(dbGegoennterKundeListItem));
 
             this.logger.LogDebug("GegoennteKunden wurden geladen");
-            return LogicResult<IPagedResult<IGegoennterKunde>>.Ok(gegoennteKundenPagedResult);
+            return LogicResult<IPagedResult<IGegoennterKundeListItem>>.Ok(gegoennteKundenListItemPagedResult);
         }
 
         public ILogicResult UpdateGegoennterKunde(IGegoennterKundeUpdate gegoennterKundeUpdate)

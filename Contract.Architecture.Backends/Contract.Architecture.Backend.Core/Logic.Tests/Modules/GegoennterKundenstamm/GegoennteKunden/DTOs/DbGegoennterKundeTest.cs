@@ -1,9 +1,6 @@
 using Contract.Architecture.Backend.Core.Contract.Persistence.Modules.GegoennterKundenstamm.GegoennteKunden;
-using Contract.Architecture.Backend.Core.Contract.Persistence.Tools.Pagination;
-using Contract.Architecture.Backend.Core.Logic.Tests.Tools.Pagination;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKundenstamm.GegoennteKunden
 {
@@ -72,22 +69,6 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
                 GegoennterGuid = GegoennterKundeTestValues.GegoennterGuidForUpdate,
                 GegoennterInteger = GegoennterKundeTestValues.GegoennterIntegerForUpdate,
                 BesteBankId = GegoennterKundeTestValues.BesteBankIdForUpdate,
-            };
-        }
-
-        public static IDbPagedResult<IDbGegoennterKunde> ForPaged()
-        {
-            return new DbPagedResult<IDbGegoennterKunde>()
-            {
-                Data = new List<IDbGegoennterKunde>()
-                {
-                    DbGegoennterKundeTest.Default(),
-                    DbGegoennterKundeTest.Default2()
-                },
-                TotalCount = 2,
-                Count = 2,
-                Limit = 10,
-                Offset = 0
             };
         }
 

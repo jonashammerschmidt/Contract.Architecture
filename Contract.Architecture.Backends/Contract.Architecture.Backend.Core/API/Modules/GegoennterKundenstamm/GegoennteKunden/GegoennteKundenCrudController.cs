@@ -5,7 +5,6 @@ using Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoennterKunden
 using Contract.Architecture.Backend.Core.Contract.Logic.Tools.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 namespace Contract.Architecture.Backend.Core.API.Modules.GegoennterKundenstamm.GegoennteKunden
 {
@@ -22,11 +21,11 @@ namespace Contract.Architecture.Backend.Core.API.Modules.GegoennterKundenstamm.G
 
         [HttpGet]
         [Authorized]
-        [Pagination(FilterFields = new[] { "Name" })]
-        public ActionResult<IPagedResult<IGegoennterKunde>> GetGegoennteKunden()
+        [Pagination]
+        public ActionResult<IPagedResult<IGegoennterKundeListItem>> GetPagedGegoennteKunden()
         {
-            var getGegoennteKundenPagedResult = this.gegoennteKundenCrudLogic.GetGegoennteKunden();
-            return this.FromLogicResult(getGegoennteKundenPagedResult);
+            var pagedGegoennteKundenResult = this.gegoennteKundenCrudLogic.GetPagedGegoennteKunden();
+            return this.FromLogicResult(pagedGegoennteKundenResult);
         }
 
         [HttpGet]

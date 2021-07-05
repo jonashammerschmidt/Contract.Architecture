@@ -64,14 +64,15 @@ namespace Contract.Architecture.Backend.Core.Persistence.Modules.GegoennterKunde
             return DbGegoennterKundeDetail.FromEfGegoennterKunde(efGegoennterKunde);
         }
 
-        public IDbPagedResult<IDbGegoennterKunde> GetGegoennteKunden()
+        public IDbPagedResult<IDbGegoennterKundeListItem> GetPagedGegoennteKunden()
         {
-            var efGegoennteKunden = this.dbContext.GegoennteKunden;
+            var efGegoennteKunden = this.dbContext.GegoennteKunden
+                .Include(efKunden => efKunden.BesteBank);
 
             return Pagination.Filter(
                 efGegoennteKunden,
                 this.paginationContext,
-                efGegoennterKunde => DbGegoennterKunde.FromEfGegoennterKunde(efGegoennterKunde));
+                efGegoennterKunde => DbGegoennterKundeListItem.FromEfGegoennterKunde(efGegoennterKunde));
         }
 
         public IEnumerable<IDbGegoennterKunde> GetAllGegoennteKunden()

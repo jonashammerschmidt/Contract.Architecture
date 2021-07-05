@@ -159,14 +159,14 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
                 logger);
 
             // Act
-            ILogicResult<IPagedResult<IGegoennterKunde>> result = gegoennteKundenCrudLogic.GetGegoennteKunden();
+            ILogicResult<IPagedResult<IGegoennterKundeListItem>> result = gegoennteKundenCrudLogic.GetPagedGegoennteKunden();
 
             // Assert
             Assert.AreEqual(LogicResultState.Ok, result.State);
-            IGegoennterKunde[] gegoennterKundeResults = result.Data.Data.ToArray();
-            Assert.AreEqual(2, gegoennterKundeResults.Length);
-            GegoennterKundeTest.AssertDefault(gegoennterKundeResults[0]);
-            GegoennterKundeTest.AssertDefault2(gegoennterKundeResults[1]);
+            IGegoennterKundeListItem[] gegoennteKundenListItemResults = result.Data.Data.ToArray();
+            Assert.AreEqual(2, gegoennteKundenListItemResults.Length);
+            GegoennterKundeListItemTest.AssertDefault(gegoennteKundenListItemResults[0]);
+            GegoennterKundeListItemTest.AssertDefault2(gegoennteKundenListItemResults[1]);
         }
 
         [TestMethod]
@@ -222,7 +222,7 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
             gegoennteKundenCrudRepository.Setup(repository => repository.GetGegoennterKunde(GegoennterKundeTestValues.IdDefault2)).Returns(DbGegoennterKundeTest.Default2());
             gegoennteKundenCrudRepository.Setup(repository => repository.GetGegoennterKundeDetail(GegoennterKundeTestValues.IdDefault)).Returns(DbGegoennterKundeDetailTest.Default());
             gegoennteKundenCrudRepository.Setup(repository => repository.GetGegoennterKundeDetail(GegoennterKundeTestValues.IdDefault2)).Returns(DbGegoennterKundeDetailTest.Default2());
-            gegoennteKundenCrudRepository.Setup(repository => repository.GetGegoennteKunden()).Returns(DbGegoennterKundeTest.ForPaged());
+            gegoennteKundenCrudRepository.Setup(repository => repository.GetPagedGegoennteKunden()).Returns(DbGegoennterKundeListItemTest.ForPaged());
             gegoennteKundenCrudRepository.Setup(repository => repository.UpdateGegoennterKunde(It.IsAny<IDbGegoennterKunde>())).Callback((IDbGegoennterKunde dbGegoennterKunde) =>
             {
                 DbGegoennterKundeTest.AssertUpdated(dbGegoennterKunde);

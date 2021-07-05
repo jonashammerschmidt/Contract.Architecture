@@ -16,7 +16,7 @@ namespace Contract.Architecture.Backend.Core.Contract.Persistence.Modules.Gegoen
 
         IDbGegoennterKundeDetail GetGegoennterKundeDetail(Guid gegoennterKundeId);
 
-        IDbPagedResult<IDbGegoennterKunde> GetGegoennteKunden();
+        IDbPagedResult<IDbGegoennterKundeListItem> GetPagedGegoennteKunden();
 
         IEnumerable<IDbGegoennterKunde> GetAllGegoennteKunden();
 

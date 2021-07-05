@@ -96,5 +96,8 @@
       }
     }
   },
-  "defaultProject": "ContractArchitectureWeb"
+  "defaultProject": "ContractArchitectureWeb",
+  "cli": {
+    "analytics": false
+  }
 }

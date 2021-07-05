@@ -12,7 +12,7 @@ namespace Contract.Architecture.Backend.Core.Contract.Logic.Modules.GegoennterKu
 
         ILogicResult<IGegoennterKundeDetail> GetGegoennterKundeDetail(Guid gegoennterKundeId);
 
-        ILogicResult<IPagedResult<IGegoennterKunde>> GetGegoennteKunden();
+        ILogicResult<IPagedResult<IGegoennterKundeListItem>> GetPagedGegoennteKunden();
 
         ILogicResult UpdateGegoennterKunde(IGegoennterKundeUpdate gegoennterKundeUpdate);
     }

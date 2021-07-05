@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKundenstamm.GegoennteKunden
 {
-    internal class DbGegoennterKundeDetailTest : IDbGegoennterKundeDetail
+    internal class DbGegoennterKundeListItemTest : IDbGegoennterKundeListItem
     {
         public Guid Id { get; set; }
 
@@ -29,9 +29,9 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
 
         public IDbGegoennteBank BesteBank { get; set; }
 
-        public static IDbGegoennterKundeDetail Default()
+        public static IDbGegoennterKundeListItem Default()
         {
-            return new DbGegoennterKundeDetailTest()
+            return new DbGegoennterKundeListItemTest()
             {
                 Id = GegoennterKundeTestValues.IdDefault,
                 Name = GegoennterKundeTestValues.NameDefault,
@@ -45,9 +45,9 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
             };
         }
 
-        public static IDbGegoennterKundeDetail Default2()
+        public static IDbGegoennterKundeListItem Default2()
         {
-            return new DbGegoennterKundeDetailTest()
+            return new DbGegoennterKundeListItemTest()
             {
                 Id = GegoennterKundeTestValues.IdDefault2,
                 Name = GegoennterKundeTestValues.NameDefault2,
@@ -61,11 +61,11 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
             };
         }
 
-        public static IDbPagedResult<IDbGegoennterKundeDetail> ForPaged()
+        public static IDbPagedResult<IDbGegoennterKundeListItem> ForPaged()
         {
-            return new DbPagedResult<IDbGegoennterKundeDetail>()
+            return new DbPagedResult<IDbGegoennterKundeListItem>()
             {
-                Data = new List<IDbGegoennterKundeDetail>()
+                Data = new List<IDbGegoennterKundeListItem>()
                 {
                     Default(),
                     Default2()
@@ -77,23 +77,23 @@ namespace Contract.Architecture.Backend.Core.Logic.Tests.Modules.GegoennterKunde
             };
         }
 
-        public static void AssertDefault(IDbGegoennterKundeDetail dbGegoennterKundeDetail)
+        public static void AssertDefault(IDbGegoennterKundeListItem dbGegoennterKundeListItem)
         {
-            Assert.AreEqual(GegoennterKundeTestValues.IdDefault, dbGegoennterKundeDetail.Id);
-            DbGegoennteBankTest.AssertDefault(dbGegoennterKundeDetail.BesteBank);
+            Assert.AreEqual(GegoennterKundeTestValues.IdDefault, dbGegoennterKundeListItem.Id);
+            DbGegoennteBankTest.AssertDefault(dbGegoennterKundeListItem.BesteBank);
         }
 
-        public static void AssertDefault2(IDbGegoennterKundeDetail dbGegoennterKundeDetail)
+        public static void AssertDefault2(IDbGegoennterKundeListItem dbGegoennterKundeListItem)
         {
-            Assert.AreEqual(GegoennterKundeTestValues.IdDefault2, dbGegoennterKundeDetail.Id);
-            Assert.AreEqual(GegoennterKundeTestValues.NameDefault2, dbGegoennterKundeDetail.Name);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterNameDefault2, dbGegoennterKundeDetail.GegoennterName);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterBooleanDefault2, dbGegoennterKundeDetail.GegoennterBoolean);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDateTimeDefault2, dbGegoennterKundeDetail.GegoennterDateTime);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDoubleDefault2, dbGegoennterKundeDetail.GegoennterDouble);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterGuidDefault2, dbGegoennterKundeDetail.GegoennterGuid);
-            Assert.AreEqual(GegoennterKundeTestValues.GegoennterIntegerDefault2, dbGegoennterKundeDetail.GegoennterInteger);
-            DbGegoennteBankTest.AssertDefault2(dbGegoennterKundeDetail.BesteBank);
+            Assert.AreEqual(GegoennterKundeTestValues.IdDefault2, dbGegoennterKundeListItem.Id);
+            Assert.AreEqual(GegoennterKundeTestValues.NameDefault2, dbGegoennterKundeListItem.Name);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterNameDefault2, dbGegoennterKundeListItem.GegoennterName);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterBooleanDefault2, dbGegoennterKundeListItem.GegoennterBoolean);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDateTimeDefault2, dbGegoennterKundeListItem.GegoennterDateTime);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterDoubleDefault2, dbGegoennterKundeListItem.GegoennterDouble);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterGuidDefault2, dbGegoennterKundeListItem.GegoennterGuid);
+            Assert.AreEqual(GegoennterKundeTestValues.GegoennterIntegerDefault2, dbGegoennterKundeListItem.GegoennterInteger);
+            DbGegoennteBankTest.AssertDefault2(dbGegoennterKundeListItem.BesteBank);
         }
     }
 }

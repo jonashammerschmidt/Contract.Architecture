@@ -6,6 +6,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { guidRegex, integerRegex } from 'src/app/helpers/regex.helper';
 import { GegoennterKundeUpdate } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/dtos/i-gegoennter-kunde-update';
 import { GegoennteKundenCrudService } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/gegoennte-kunden-crud.service';
+import { MultiDataSource } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-multi/multi-data-source';
+import { IGegoennteBankDetail } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/dtos/i-gegoennte-bank-detail';
 
 @Component({
   selector: 'app-gegoennter-kunde-update',
@@ -16,7 +18,8 @@ export class GegoennterKundeUpdateDialog implements OnInit {
 
   gegoennterKundeUpdateForm: FormGroup;
 
-  gegoennteBanken: IGegoennteBank[];
+  gegoennteBankenDataSource: MultiDataSource<IGegoennteBank>;
+  selectedBesteBank: IGegoennteBank;
 
   constructor(
     private gegoennteKundenCrudService: GegoennteKundenCrudService,
@@ -28,6 +31,7 @@ export class GegoennterKundeUpdateDialog implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const gegoennterKundeDetail = await this.gegoennteKundenCrudService.getGegoennterKundeDetail(this.gegoennterKundeId);
+    this.selectedBesteBank = gegoennterKundeDetail.besteBank;
 
     this.gegoennterKundeUpdateForm = this.formBuilder.group({
       id: new FormControl({ value: '', disabled: true }, [Validators.required]),
@@ -43,8 +47,19 @@ export class GegoennterKundeUpdateDialog implements OnInit {
 
     this.gegoennterKundeUpdateForm.patchValue(GegoennterKundeUpdate.fromGegoennterKundeDetail(gegoennterKundeDetail));
 
-    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
-    this.gegoennteBanken = gegoennteBankenResult.data;
+    this.gegoennteBankenDataSource = new MultiDataSource(
+      (pageSize: number, pageIndex: number, filterTerm: string) => {
+        return this.gegoennteBankenCrudService.getGegoennteBanken({
+          limit: pageSize,
+          offset: pageSize * pageIndex,
+          filters: [
+            {
+              filterField: 'name',
+              containsFilters: [filterTerm]
+            }
+          ]
+        });
+      });
   }
 
   async onUpdateClicked(): Promise<void> {

@@ -6,6 +6,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { guidRegex, integerRegex } from 'src/app/helpers/regex.helper';
 import { GegoennteKundenCrudService } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/gegoennte-kunden-crud.service';
+import { MultiDataSource } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-multi/multi-data-source';
+import { IGegoennterKundeDetail } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/dtos/i-gegoennter-kunde-detail';
 
 @Component({
   selector: 'app-gegoennter-kunde-create',
@@ -16,7 +18,7 @@ export class GegoennterKundeCreateDialog implements OnInit {
 
   gegoennterKundeCreateForm: FormGroup;
 
-  gegoennteBanken: IGegoennteBank[];
+  gegoennteBankenDataSource: MultiDataSource<any>;
 
   constructor(
     private gegoennteKundenCrudService: GegoennteKundenCrudService,
@@ -38,8 +40,19 @@ export class GegoennterKundeCreateDialog implements OnInit {
       besteBankId: new FormControl(null, [Validators.required]),
     });
 
-    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
-    this.gegoennteBanken = gegoennteBankenResult.data;
+    this.gegoennteBankenDataSource = new MultiDataSource(
+      (pageSize: number, pageIndex: number, filterTerm: string) => {
+        return this.gegoennteBankenCrudService.getGegoennteBanken({
+          limit: pageSize,
+          offset: pageSize * pageIndex,
+          filters: [
+            {
+              filterField: 'name',
+              containsFilters: [filterTerm]
+            }
+          ]
+        });
+      });
   }
 
   async onCreateClicked(): Promise<void> {

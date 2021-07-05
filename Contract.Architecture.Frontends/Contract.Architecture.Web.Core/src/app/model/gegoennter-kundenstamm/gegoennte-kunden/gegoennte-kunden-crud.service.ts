@@ -14,12 +14,12 @@ export class GegoennteKundenCrudService {
 
     constructor(private backendCoreService: BackendCoreService) { }
 
-    public async getGegoennteKunden(paginationOptions: IPaginationOptions): Promise<IPagedResult<IGegoennterKunde>> {
+    public async getPagedGegoennteKunden(paginationOptions: IPaginationOptions): Promise<IPagedResult<IGegoennterKundeDetail>> {
         const url = '/api/gegoennter-kundenstamm/gegoennte-kunden?' + toPaginationParams(paginationOptions);
-        const gegoennteKundenResult = await this.backendCoreService.get<IPagedResult<ApiGegoennterKunde>>(url);
+        const gegoennteKundenResult = await this.backendCoreService.get<IPagedResult<ApiGegoennterKundeDetail>>(url);
 
         gegoennteKundenResult.data = gegoennteKundenResult.data
-            .map(apiGegoennterKunde => GegoennterKunde.fromApiGegoennterKunde(apiGegoennterKunde));
+            .map(apiGegoennterKunde => GegoennterKundeDetail.fromApiGegoennterKundeDetail(apiGegoennterKunde));
         return gegoennteKundenResult;
     }
 

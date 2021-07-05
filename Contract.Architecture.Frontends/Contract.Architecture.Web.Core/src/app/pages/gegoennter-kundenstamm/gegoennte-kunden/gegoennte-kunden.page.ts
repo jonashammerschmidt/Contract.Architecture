@@ -1,14 +1,13 @@
-import { IGegoennteBank } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/dtos/i-gegoennte-bank';
-import { GegoennteBankenCrudService } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/gegoennte-banken-crud.service';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { TableFilterBarComponent } from 'src/app/components/ui/table-filter-bar/table-filter-bar.component';
-import { MultiDataSource } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-multi/multi-data-source';
 import { TableFilterBarDropdownItem } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-item';
+import { MultiDataSource } from 'src/app/components/ui/table-filter-bar/table-filter-bar-dropdown-multi/multi-data-source';
+import { TableFilterBarComponent } from 'src/app/components/ui/table-filter-bar/table-filter-bar.component';
+import { IGegoennterKundeDetail } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/dtos/i-gegoennter-kunde-detail';
 import { GegoennteKundenCrudService } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/gegoennte-kunden-crud.service';
-import { IGegoennterKunde } from 'src/app/model/gegoennter-kundenstamm/gegoennte-kunden/dtos/i-gegoennter-kunde';
+import { GegoennteBankenCrudService } from 'src/app/model/gegoenntes-bankwesen/gegoennte-banken/gegoennte-banken-crud.service';
 import { PaginationDataSource } from 'src/app/services/backend/pagination.data-source';
 import { GegoennterKundeCreateDialog } from './dialogs/gegoennter-kunde-create/gegoennter-kunde-create.dialog';
 
@@ -27,7 +26,7 @@ export class GegoennteKundenPage implements AfterViewInit {
   // Table
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  public gegoennteKundenDataSource: PaginationDataSource<IGegoennterKunde>;
+  public gegoennteKundenDataSource: PaginationDataSource<IGegoennterKundeDetail>;
   public gegoennteKundenGridColumns: string[] = [
     'name',
     'gegoennterName',
@@ -39,16 +38,14 @@ export class GegoennteKundenPage implements AfterViewInit {
     'besteBank',
     'detail',
   ];
-  
-  gegoennteBanken: IGegoennteBank[];
 
   constructor(
     private gegoennteBankenCrudService: GegoennteBankenCrudService,
     private gegoennteKundenCrudService: GegoennteKundenCrudService,
     private matDialog: MatDialog) {
-    
-    this.gegoennteKundenDataSource = new PaginationDataSource<IGegoennterKunde>(
-      (options) => this.gegoennteKundenCrudService.getGegoennteKunden(options),
+
+    this.gegoennteKundenDataSource = new PaginationDataSource<IGegoennterKundeDetail>(
+      (options) => this.gegoennteKundenCrudService.getPagedGegoennteKunden(options),
       () => [
         {
           filterField: 'name',
@@ -56,7 +53,7 @@ export class GegoennteKundenPage implements AfterViewInit {
         },
       ]);
   }
-  
+
   async ngAfterViewInit(): Promise<void> {
     await this.setupGegoennteBankenFilter();
 
@@ -69,25 +66,17 @@ export class GegoennteKundenPage implements AfterViewInit {
     });
   }
 
-
-  public getGegoennteBankName(gegoennteBankId: string): string {
-    return this.gegoennteBanken.find(gegoennteBank => gegoennteBank.id === gegoennteBankId).name;
-  }
-
   private async setupGegoennteBankenFilter(): Promise<void> {
-    const gegoennteBankenResult = await this.gegoennteBankenCrudService.getGegoennteBanken({ limit: 500, offset: 0 });
-    this.gegoennteBanken = gegoennteBankenResult.data;
-
     this.filterItems.push({
       dataName: 'Beste Bank',
       dataSource: new MultiDataSource((pageSize: number, pageIndex: number, filterTerm: string) => {
         return this.gegoennteBankenCrudService.getGegoennteBanken({
           limit: pageSize,
-          offset: pageSize* pageIndex,
+          offset: pageSize * pageIndex,
           filters: [
             {
-                filterField: 'name',
-                containsFilters: [filterTerm]
+              filterField: 'name',
+              containsFilters: [filterTerm]
             }
           ]
         });
