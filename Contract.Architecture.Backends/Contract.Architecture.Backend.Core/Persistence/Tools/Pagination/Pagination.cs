@@ -29,7 +29,7 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tools.Pagination
                     TotalCount = totalCount,
                 };
             }
-            catch (Exception e)
+            catch
             {
                 throw new PaginationException();
             }
