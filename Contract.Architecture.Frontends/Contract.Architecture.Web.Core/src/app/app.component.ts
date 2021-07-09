@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from './model/sessions/sessions.service';
 import { RestService } from './services/backend/rest.service';
@@ -13,7 +13,7 @@ interface MenuItem {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterContentInit {
 
   loading = true;
 
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.loading = false;
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterContentInit(): void {
     this.calculateContentSize();
   }
 
