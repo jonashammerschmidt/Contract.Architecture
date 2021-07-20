@@ -1,7 +1,6 @@
 ﻿using Contract.Architecture.Backend.Core.Persistence.Modules.SessionManagement.Sessions;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUserPasswortReset;
 using Contract.Architecture.Backend.Core.Persistence.Modules.UserManagement.EmailUsers;
-using Microsoft.EntityFrameworkCore;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests
 {
@@ -11,7 +10,7 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests
 
         public InMemoryRepositories()
         {
-            this.CreatePersistenceDbContext();
+            this.persistenceDbContext = InMemoryDbContext.CreatePersistenceDbContextEmpty();
         }
 
         internal EmailUsersRepository GetEmailUsersRepository()
@@ -27,18 +26,6 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests
         internal SessionsRepository GetSessionsRepository()
         {
             return new SessionsRepository(this.persistenceDbContext);
-        }
-
-        private void CreatePersistenceDbContext()
-        {
-            DbContextOptions<PersistenceDbContext> options;
-            var builder = new DbContextOptionsBuilder<PersistenceDbContext>();
-            builder.UseInMemoryDatabase("in-memory-db");
-            options = builder.Options;
-
-            this.persistenceDbContext = PersistenceDbContext.CustomInstantiate(options);
-            this.persistenceDbContext.Database.EnsureDeleted();
-            this.persistenceDbContext.Database.EnsureCreated();
         }
     }
 }

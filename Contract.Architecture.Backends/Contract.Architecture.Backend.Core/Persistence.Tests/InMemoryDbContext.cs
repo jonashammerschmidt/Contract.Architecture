@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contract.Architecture.Backend.Core.Persistence.Tests
 {
     public static class InMemoryDbContext
     {
-        public static PersistenceDbContext CreatePersistenceDbContext()
+        public static PersistenceDbContext CreatePersistenceDbContextEmpty()
         {
             DbContextOptions<PersistenceDbContext> options;
             var builder = new DbContextOptionsBuilder<PersistenceDbContext>();
@@ -18,9 +18,9 @@ namespace Contract.Architecture.Backend.Core.Persistence.Tests
             return persistenceDbContext;
         }
 
-        public static PersistenceDbContext CreatePersistenceDbContextWithDefault()
+        public static PersistenceDbContext CreatePersistenceDbContextWithDbDefault()
         {
-            PersistenceDbContext persistenceDbContext = CreatePersistenceDbContext();
+            PersistenceDbContext persistenceDbContext = CreatePersistenceDbContextEmpty();
 
             persistenceDbContext.SaveChanges();
 
